@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("064c011c-a2a8-421b-86d8-6f532e9b4881")
 public class GearGobbler extends Subsystem {
+	
     @objid ("3328d132-187e-4cc6-9d63-ce44b0ea9735")
     public void openFlap() {
     }
