@@ -12,4 +12,10 @@ public class Drivetrain extends Subsystem {
     @objid ("df7bc954-ab43-4d4f-b770-7f7e37af812b")
     private DriveSide rightSide;
 
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

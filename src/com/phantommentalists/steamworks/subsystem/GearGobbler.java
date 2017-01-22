@@ -14,4 +14,10 @@ public class GearGobbler extends Subsystem {
     public void closeFlap() {
     }
 
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

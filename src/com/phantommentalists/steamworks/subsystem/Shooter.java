@@ -37,4 +37,10 @@ public class Shooter extends Subsystem {
     public boolean isShooterUpToSpeed() {
     }
 
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
