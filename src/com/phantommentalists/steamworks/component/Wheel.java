@@ -7,5 +7,22 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 public class Wheel {
     @objid ("edfbe244-8bf7-4a5b-9a6a-a15fa68dea9a")
     private CANTalon steeringMotor;
+    
+    private double offset = 0;
 
+    public Wheel(int canId, double offset)
+    {
+    	steeringMotor = new CANTalon(canId);
+    }
+    
+    public void setPosition()
+    {
+    	
+    }
+    
+    public double getPosition()
+    {
+    	return 0;
+    }
+    
 }

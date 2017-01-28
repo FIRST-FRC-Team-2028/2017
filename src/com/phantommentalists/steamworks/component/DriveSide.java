@@ -2,6 +2,9 @@ package com.phantommentalists.steamworks.component;
 
 import com.ctre.CANTalon;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters.CanId;
+import com.phantommentalists.steamworks.Parameters.SideOfRobot;
+import com.phantommentalists.steamworks.Parameters.SteeringOffset;
 
 @objid ("38bc95f2-27cd-419f-bb2d-8b152ecc87e9")
 public class DriveSide {
@@ -17,4 +20,27 @@ public class DriveSide {
     @objid ("2ba11a31-ab1e-43e2-ae46-26b179e6db9c")
     private Wheel rearWheel;
 
+    public DriveSide(SideOfRobot side)
+    {
+    	switch(side)
+    	{
+    	case RIGHT:
+    		masterMotor = new CANTalon(CanId.DRIVE_RIGHT_MASTER.getId());
+    		followerMotor = new CANTalon(CanId.DRIVE_RIGHT_FOLLOWER.getId());
+    		frontWheel = new Wheel(CanId.STEERING_RIGHT_FRONT.getId(),SteeringOffset.LEFT_FRONT.getOffset());
+    		rearWheel = new Wheel(CanId.STEERING_RIGHT_REAR.getId(),SteeringOffset.LEFT_REAR.getOffset());
+    		break;
+    	case LEFT:
+    		masterMotor = new CANTalon(CanId.DRIVE_LEFT_MASTER.getId());
+    		followerMotor = new CANTalon(CanId.DRIVE_LEFT_FOLLOWER.getId());
+    		frontWheel = new Wheel(CanId.STEERING_LEFT_FRONT.getId(), SteeringOffset.RIGHT_FRONT.getOffset());
+    		rearWheel = new Wheel(CanId.STEERING_LEFT_REAR.getId(),SteeringOffset.RIGHT_REAR.getOffset());
+    		break;
+    	default:
+    		throw new IllegalArgumentException("Invalid side of robot");
+    	}
+    }
+    
+    
+    
 }
