@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks;
+package com.phantommentalists.steamworks.component;
 
 import com.ctre.CANTalon;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
