@@ -16,6 +16,7 @@ public class Climber extends Subsystem {
 
     @objid ("353bc7be-0076-4b3a-afbc-c8771233e264")
     public boolean isAtTouchpad() {
+    	return false;
     }
 
 	@Override

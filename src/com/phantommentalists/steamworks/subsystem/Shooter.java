@@ -35,6 +35,7 @@ public class Shooter extends Subsystem {
 
     @objid ("ba8d49b7-1823-482d-bd89-e96e6ac9370c")
     public boolean isShooterUpToSpeed() {
+    	return false;
     }
 
 	@Override
