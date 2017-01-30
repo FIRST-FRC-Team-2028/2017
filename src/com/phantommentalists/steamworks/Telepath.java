@@ -1,10 +1,30 @@
 package com.phantommentalists.steamworks;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.subsystem.Climber;
+import com.phantommentalists.steamworks.subsystem.Drivetrain;
+import com.phantommentalists.steamworks.subsystem.GearGobbler;
+import com.phantommentalists.steamworks.subsystem.PixieCamera;
+import com.phantommentalists.steamworks.subsystem.Shooter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 @objid ("595898a6-dbcb-4cef-ba25-a6e7f7e35190")
 public class Telepath extends IterativeRobot {
+    @objid ("3d9689ff-e81e-487e-aefa-4f78e43f6106")
+    private Drivetrain drivetrain;
+
+    @objid ("dcd9b9f0-7d96-4ba2-9a01-3d65faed9160")
+    private Shooter shooter;
+
+    @objid ("101fbe46-417e-4fee-a962-1d74188860fd")
+    private Climber climber;
+
+    @objid ("0b633498-f0d6-4075-a2be-968bcbc09caa")
+    private GearGobbler gearGobbler;
+
+    @objid ("bcc723c9-717e-4ede-9db3-fbeeb0df0fe5")
+    private PixieCamera pixieCamera;
+
     @objid ("0b53ecde-257f-466b-bcef-43fce4dbdc95")
     public void robotInit() {
     }

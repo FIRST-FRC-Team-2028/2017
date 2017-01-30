@@ -1,10 +1,14 @@
 package com.phantommentalists.steamworks.subsystem;
 
+import com.ctre.CANTalon;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("7f4cd058-1d2d-4a6d-9a50-a3ac0c4836b4")
 public class Climber extends Subsystem {
+    @objid ("25dc6539-fcd9-48bd-8998-b7361199f269")
+    private CANTalon winchMotor;
+
     @objid ("8e83bd89-9266-4bb6-a84f-11ea55ce94ed")
     public void turnOn() {
     }
@@ -23,6 +27,10 @@ public class Climber extends Subsystem {
     @Override
     protected void initDefaultCommand() {
         // TODO Auto-generated method stub
+    }
+
+    @objid ("f4e055f9-36cc-43d2-98f4-640805a1ab15")
+    public Climber() {
     }
 
 }

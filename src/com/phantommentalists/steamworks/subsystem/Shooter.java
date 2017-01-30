@@ -1,10 +1,28 @@
 package com.phantommentalists.steamworks.subsystem;
 
+import com.ctre.CANTalon;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+/**
+ * Subsystem for robot's shooter.
+ * 
+ * This class encapsulates all of the hardware that represents the shooter/infeed mechanism.  The same
+ * mechanism can pickup fuel off the floor and store them in the robot's internal hopper, and extract
+ * fuel from the hopper and shoot it into the boiler's high goal.
+ */
 @objid ("5b3b8d0c-a5f0-4e9a-801d-7122a1a4eaa9")
 public class Shooter extends Subsystem {
+    /**
+     * Motor controller for wheel motor.  Shooter's wheel motor can be run forward to propel fuel
+     * into the high goal and in reverse to direct fuel into the robot's fuel hopper.
+     */
+    @objid ("c89532f8-ad05-46f5-8c40-8834ab21f172")
+    private final CANTalon wheelMotor;
+
+    @objid ("39f50a55-9553-4bf4-8026-d40058cb7a83")
+    private final CANTalon conveyorMotor;
+
     @objid ("abb1320d-1f8b-4314-99f3-3b7aecfb78d2")
     public void turnOnConveyor() {
     }
@@ -43,6 +61,10 @@ public class Shooter extends Subsystem {
     @Override
     protected void initDefaultCommand() {
         // TODO Auto-generated method stub
+    }
+
+    @objid ("732b1b92-b601-477c-ab75-004c7e1b6814")
+    public Shooter() {
     }
 
 }
