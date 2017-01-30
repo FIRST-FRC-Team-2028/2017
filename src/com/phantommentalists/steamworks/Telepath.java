@@ -5,16 +5,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 @objid ("595898a6-dbcb-4cef-ba25-a6e7f7e35190")
 public class Telepath extends IterativeRobot {
-    @objid ("8991f4f3-e791-422a-bd5f-a80c432d6164")
-    public void startCompetition() {
-    }
-
     @objid ("0b53ecde-257f-466b-bcef-43fce4dbdc95")
     public void robotInit() {
-    }
-
-    @objid ("cb48fd6b-fafc-427a-b570-d0fc63c6fb4c")
-    public void disableInit() {
     }
 
     @objid ("dab887d4-4871-4722-aa13-e9fed526eebe")
@@ -25,14 +17,6 @@ public class Telepath extends IterativeRobot {
     public void teleopInit() {
     }
 
-    @objid ("8beaeb57-5925-4e16-8f74-5843047f4d72")
-    public void robotPeriodic() {
-    }
-
-    @objid ("a6da49de-5651-4601-ac91-1dcdecb3f2b9")
-    public void disablePeriodic() {
-    }
-
     @objid ("77311426-3d0c-409a-a086-2bc92e6e89bd")
     public void autonomousPeriodic() {
     }
@@ -41,7 +25,23 @@ public class Telepath extends IterativeRobot {
     public void teleopPeriodic() {
     }
 
-    @objid ("866efb67-b2e0-4d93-9a82-1d322a981681")
+    @objid ("d4573f62-3f85-40b0-94f2-673a79e3d9d8")
+    public void startCompetition() {
+    }
+
+    @objid ("ca63651a-1b48-4fda-9a4d-649cf66bba2f")
+    public void disableInit() {
+    }
+
+    @objid ("8777cba3-4287-482a-9b97-9e306b902160")
+    public void robotPeriodic() {
+    }
+
+    @objid ("a343a83d-cc3b-43a0-979e-e09e44143476")
+    public void disablePeriodic() {
+    }
+
+    @objid ("aed20313-389b-4a3c-b333-d763e6cd1572")
     public Telepath() {
     }
 

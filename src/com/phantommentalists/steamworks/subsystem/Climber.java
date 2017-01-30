@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("7f4cd058-1d2d-4a6d-9a50-a3ac0c4836b4")
 public class Climber extends Subsystem {
-	
     @objid ("8e83bd89-9266-4bb6-a84f-11ea55ce94ed")
     public void turnOn() {
     }
@@ -16,12 +15,14 @@ public class Climber extends Subsystem {
 
     @objid ("353bc7be-0076-4b3a-afbc-c8771233e264")
     public boolean isAtTouchpad() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
-	@Override
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
-	}
+    @objid ("b83276d0-5ca4-4d75-b6df-35cd80becd12")
+    @Override
+    protected void initDefaultCommand() {
+        // TODO Auto-generated method stub
+    }
 
 }

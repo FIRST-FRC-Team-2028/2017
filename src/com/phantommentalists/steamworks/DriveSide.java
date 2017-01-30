@@ -5,10 +5,10 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("38bc95f2-27cd-419f-bb2d-8b152ecc87e9")
 public class DriveSide {
-    @objid ("b625a7b8-f142-4190-9273-e48cafc6251d")
+    @objid ("48fa25fe-65df-4a9c-8ad6-2fae4e1d4bda")
     private CANTalon masterMotor;
 
-    @objid ("ec8d5611-6730-499c-b1fd-02cc18877a77")
+    @objid ("3507f6e7-e0dd-4fff-bb23-93a8003f5272")
     private CANTalon followerMotor;
 
     @objid ("6bf0ea78-47be-4842-a005-e90a57b4407b")

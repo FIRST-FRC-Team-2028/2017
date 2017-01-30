@@ -35,12 +35,14 @@ public class Shooter extends Subsystem {
 
     @objid ("ba8d49b7-1823-482d-bd89-e96e6ac9370c")
     public boolean isShooterUpToSpeed() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
-	@Override
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		
-	}
+    @objid ("4d2905ae-6240-4a38-a21a-68aefe11c32f")
+    @Override
+    protected void initDefaultCommand() {
+        // TODO Auto-generated method stub
+    }
 
 }
