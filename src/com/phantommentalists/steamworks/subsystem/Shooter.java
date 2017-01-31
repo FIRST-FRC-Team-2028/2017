@@ -65,6 +65,8 @@ public class Shooter extends Subsystem {
 
     @objid ("732b1b92-b601-477c-ab75-004c7e1b6814")
     public Shooter() {
+    	wheelMotor = new CANTalon(0);
+    	conveyorMotor = new CANTalon(0);
     }
 
 }

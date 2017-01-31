@@ -39,4 +39,10 @@ public class PixieCamera extends Subsystem {
     	return null;
     }
 
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
