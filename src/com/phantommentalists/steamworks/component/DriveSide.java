@@ -40,5 +40,20 @@ public class DriveSide {
             throw new IllegalArgumentException("Invalid side of robot");
         }
     }
+    
+    public void crabDrive(double angle, double speed)
+    {
+    	
+    }
+    
+    public void swerveDrive(double angle, double speed)
+    {
+    	
+    }
+    
+    public void spinOnAxis(double speed)
+    {
+    	
+    }
 
 }
