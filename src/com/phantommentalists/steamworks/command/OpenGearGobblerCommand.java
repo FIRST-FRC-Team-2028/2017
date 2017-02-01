@@ -26,5 +26,17 @@ public class OpenGearGobblerCommand extends Command {
     @Override
     protected void initialize() {
     }
+
+	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -30,4 +30,16 @@ public class SpinDriveCommand extends Command {
         return false;
     }
 
+	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
