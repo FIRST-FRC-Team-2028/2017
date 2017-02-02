@@ -79,5 +79,8 @@ public class Parameters {
     public enum PneumaticChannel {
         ;
     }
+    
+    public static final double CONVEYOR_SPEED = 0;
+    public static final double SHOOTER_WHEEL_SHOOT_SETPOINT = 0;
 
 }
