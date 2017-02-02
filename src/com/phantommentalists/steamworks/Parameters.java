@@ -98,5 +98,6 @@ public class Parameters {
     
     public static final double CONVEYOR_SPEED = 0;
     public static final double SHOOTER_WHEEL_SHOOT_SETPOINT = 0;
+	public static final double SHOOTER_WHEEL_LOAD_SETPOINT = 0;
 
 }

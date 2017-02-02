@@ -87,7 +87,7 @@ public class Shooter extends Subsystem {
     @objid ("abb1320d-1f8b-4314-99f3-3b7aecfb78d2")
     public void turnOnConveyor() 
     {
-    	conveyorMotor.set(Parmeters.CONVEYOR_SPEED);
+    	conveyorMotor.set(Parameters.CONVEYOR_SPEED);
     }
 
     /*
