@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks;
+package src.com.phantommentalists.steamworks;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
@@ -95,9 +95,10 @@ public class Parameters {
     		return channel;
     	}
     }
-    
-    public static final double CONVEYOR_SPEED = 0;
-    public static final double SHOOTER_WHEEL_SHOOT_SETPOINT = 0;
-	public static final double SHOOTER_WHEEL_LOAD_SETPOINT = 0;
 
+	public static final double SHOOTER_WHEEL_LOAD_SETPOINT = 0;
+	public static final double SHOOTER_WHEEL_SHOOT_SETPOINT = 0;
+	public static final double CONVEYOR_SPEED = 0;
+
+    
 }

@@ -1,10 +1,9 @@
-package com.phantommentalists.steamworks.subsystem;
+package src.com.phantommentalists.steamworks.subsystem;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
-import com.phantommentalists.steamworks.Parameters;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 

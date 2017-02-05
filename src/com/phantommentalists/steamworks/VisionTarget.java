@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks;
+package src.com.phantommentalists.steamworks;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 

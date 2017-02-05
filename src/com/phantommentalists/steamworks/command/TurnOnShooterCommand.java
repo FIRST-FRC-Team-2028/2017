@@ -1,7 +1,8 @@
-package com.phantommentalists.steamworks.command;
+package src.com.phantommentalists.steamworks.command;
+
+import src.com.phantommentalists.steamworks.subsystem.Shooter;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
-import com.phantommentalists.steamworks.subsystem.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,6 +16,7 @@ public class TurnOnShooterCommand extends Command {
 	
     @Override
     protected void execute() {
+    	
     }
 
     @Override

@@ -1,9 +1,10 @@
-package com.phantommentalists.steamworks.command;
+package src.com.phantommentalists.steamworks.command;
+
+import src.com.phantommentalists.steamworks.subsystem.Drivetrain;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
-import com.phantommentalists.steamworks.subsystem.Drivetrain;
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("9fa60e62-3aa8-4cba-95d7-0fa18c5388a6")
 public class CrabDriveCommand extends Command {
