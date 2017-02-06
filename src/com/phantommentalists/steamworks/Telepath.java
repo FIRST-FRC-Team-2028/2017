@@ -28,6 +28,7 @@ public class Telepath extends IterativeRobot {
 
     @objid ("0b53ecde-257f-466b-bcef-43fce4dbdc95")
     public void robotInit() {
+    	
     }
 
     @objid ("dab887d4-4871-4722-aa13-e9fed526eebe")
