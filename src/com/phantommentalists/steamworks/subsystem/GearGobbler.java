@@ -32,8 +32,9 @@ public class GearGobbler extends Subsystem
     }
 
     @objid ("3ca51cff-918c-4555-93bf-a7c789eb3010")
+
     public GearGobbler() 
     {
-    	solenoid = new Solenoid(Parameters.PneumaticChannel.GEAR_GOBBLER_FLAP);
+    	solenoid = new Solenoid(Parameters.PneumaticChannel.GEAR_GOBBLER_FLAP.getChannel());
     }
 }
