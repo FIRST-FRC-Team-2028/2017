@@ -1,4 +1,4 @@
-package src.com.phantommentalists.steamworks.subsystem;
+package com.phantommentalists.steamworks.subsystem;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;

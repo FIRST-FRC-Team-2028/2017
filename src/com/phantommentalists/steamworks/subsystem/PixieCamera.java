@@ -1,10 +1,9 @@
-package src.com.phantommentalists.steamworks.subsystem;
+package com.phantommentalists.steamworks.subsystem;
 
 import java.util.List;
 
-import src.com.phantommentalists.steamworks.VisionTarget;
-
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.VisionTarget;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;

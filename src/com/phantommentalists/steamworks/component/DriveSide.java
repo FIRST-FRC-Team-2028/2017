@@ -1,11 +1,10 @@
-package src.com.phantommentalists.steamworks.component;
-
-import src.com.phantommentalists.steamworks.Parameters.CanId;
-import src.com.phantommentalists.steamworks.Parameters.SideOfRobot;
-import src.com.phantommentalists.steamworks.Parameters.SteeringOffset;
+package com.phantommentalists.steamworks.component;
 
 import com.ctre.CANTalon;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters.CanId;
+import com.phantommentalists.steamworks.Parameters.SideOfRobot;
+import com.phantommentalists.steamworks.Parameters.SteeringOffset;
 
 @objid ("38bc95f2-27cd-419f-bb2d-8b152ecc87e9")
 public class DriveSide {

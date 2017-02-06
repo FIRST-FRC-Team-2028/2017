@@ -1,8 +1,7 @@
-package src.com.phantommentalists.steamworks.subsystem;
-
-import src.com.phantommentalists.steamworks.component.DriveSide;
+package com.phantommentalists.steamworks.subsystem;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.component.DriveSide;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 

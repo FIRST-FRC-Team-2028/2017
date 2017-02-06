@@ -1,11 +1,10 @@
-package src.com.phantommentalists.steamworks.subsystem;
-
-import src.com.phantommentalists.steamworks.Parameters;
-import src.com.phantommentalists.steamworks.Parameters.CanId;
-import src.com.phantommentalists.steamworks.Parameters.PneumaticChannel;
+package com.phantommentalists.steamworks.subsystem;
 
 import com.ctre.CANTalon;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters;
+import com.phantommentalists.steamworks.Parameters.CanId;
+import com.phantommentalists.steamworks.Parameters.PneumaticChannel;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;

@@ -1,8 +1,7 @@
-package src.com.phantommentalists.steamworks.subsystem;
-
-import src.com.phantommentalists.steamworks.Parameters;
+package com.phantommentalists.steamworks.subsystem;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;

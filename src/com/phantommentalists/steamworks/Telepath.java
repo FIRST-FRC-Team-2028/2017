@@ -1,12 +1,11 @@
-package src.com.phantommentalists.steamworks;
-
-import src.com.phantommentalists.steamworks.subsystem.Climber;
-import src.com.phantommentalists.steamworks.subsystem.Drivetrain;
-import src.com.phantommentalists.steamworks.subsystem.GearGobbler;
-import src.com.phantommentalists.steamworks.subsystem.PixieCamera;
-import src.com.phantommentalists.steamworks.subsystem.Shooter;
+package com.phantommentalists.steamworks;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.subsystem.Climber;
+import com.phantommentalists.steamworks.subsystem.Drivetrain;
+import com.phantommentalists.steamworks.subsystem.GearGobbler;
+import com.phantommentalists.steamworks.subsystem.PixieCamera;
+import com.phantommentalists.steamworks.subsystem.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
