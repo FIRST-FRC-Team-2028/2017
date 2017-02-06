@@ -55,7 +55,7 @@ public class Shooter extends Subsystem {
      * Constructor.  This method is responsible for initializing a new Shooter instance.
      */
     @objid ("732b1b92-b601-477c-ab75-004c7e1b6814")
-    public Shooter(CanId wheelCanId, CanId conveyorCanId, PneumaticChannel openSolenoid, PneumaticChannel closeSolenoid) {
+    public Shooter(CanId wheelCanId, CanId conveyorCanId, PneumaticChannel openSolenoid, PneumaticChannel closeSolenoid, PneumaticChannel upSolenoid ,PneumaticChannel downSolenoid) {
     	wheelMotor = new CANTalon(wheelCanId.getId());
     	wheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	wheelMotor.enableBrakeMode(true);
@@ -78,6 +78,9 @@ public class Shooter extends Subsystem {
     	
     	gateCloseSolenoid = new Solenoid(closeSolenoid.getChannel());
     	
+    	loadingWheelOpen = new Solenoid(upSolenoid.getChannel());
+    	
+    	loadingWheelClose = new Solenoid(downSolenoid.getChannel());
     	
     }
     
@@ -152,7 +155,27 @@ public class Shooter extends Subsystem {
         // TODO Auto-generated method stub
         return false;
     }
+    
+    /*
+     * This method keeps the loading wheel up.
+     */
+    
+    public void setLaoderWheelPositionUp()
+    {
+    	loadingWheelOpen.set(false);
+    	loadingWheelClose.set(true);
+    }
 
+    /*
+     * This method lets the loading wheel down.
+     */
+    
+    public void setLaoderWheelPositionDown()
+    {
+    	loadingWheelOpen.set(true);
+    	loadingWheelClose.set(false);
+    }
+    
     @objid ("4d2905ae-6240-4a38-a21a-68aefe11c32f")
     @Override
     protected void initDefaultCommand() 
