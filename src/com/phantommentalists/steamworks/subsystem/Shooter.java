@@ -54,20 +54,27 @@ public class Shooter extends Subsystem {
     /**
      * Constructor.  This method is responsible for initializing a new Shooter instance.
      */
+    
+    
+    private double f=00;
+    
+    private double p=00;
+    
+    private double d=00;
+    
+    private double i=00;
+    
     @objid ("732b1b92-b601-477c-ab75-004c7e1b6814")
     public Shooter(CanId wheelCanId, CanId conveyorCanId, PneumaticChannel openSolenoid, PneumaticChannel closeSolenoid, PneumaticChannel upSolenoid ,PneumaticChannel downSolenoid) {
     	wheelMotor = new CANTalon(wheelCanId.getId());
     	wheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	wheelMotor.enableBrakeMode(true);
-//    	wheelMotor.setF(f);
-//    	wheelMotor.setP(p);
-//    	wheelMotor.setI(i);
-//    	wheelMotor.setD(d);
-    	wheelMotor.setInverted(wheelCanId.isReversed());
+    	wheelMotor.setF(f);
+    	wheelMotor.setP(p);
+    	wheelMotor.setI(i);
+    	wheelMotor.setD(d);
     	wheelMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 //    	wheelMotor.set
-    	
-    	
     	
     	conveyorMotor = new CANTalon(conveyorCanId.getId());
     	conveyorMotor.enableBrakeMode(true);
@@ -84,13 +91,23 @@ public class Shooter extends Subsystem {
     	
     }
     
+    public void determinemode()
+    {
+    	
+    	
+    	
+    	
+    }
+    
+    
     /*
      * This method will turn on the conveyor belt.
      */
     @objid ("abb1320d-1f8b-4314-99f3-3b7aecfb78d2")
     public void turnOnConveyor() 
     {
-    	conveyorMotor.set(Parmeters.CONVEYOR_SPEED);
+    	conveyorMotor.set(1);
+    	
     }
 
     /*
@@ -108,7 +125,7 @@ public class Shooter extends Subsystem {
     @objid ("68e94877-afe1-4880-9814-1f35bbd1f035")
     public void turnOnShooterWheel() 
     {
-    	wheelMotor.set(Parameters.SHOOTER_WHEEL_SHOOT_SETPOINT);
+    	wheelMotor.set(10);
     }
 
     /*
@@ -126,7 +143,7 @@ public class Shooter extends Subsystem {
      */
     @objid ("ddc2d195-e75a-46c0-a585-628acfb8e660")
     public void turnOnLoaderWheel() {
-    	wheelMotor.set(Parameters.SHOOTER_WHEEL_LOAD_SETPOINT);
+    	wheelMotor.set(0);
     }
 
     /**

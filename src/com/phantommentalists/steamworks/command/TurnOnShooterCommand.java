@@ -10,12 +10,18 @@ public class TurnOnShooterCommand extends Command {
 	
 	private Shooter shooter;
 	
-	public TurnOnShooterCommand(Shooter shooter) {
+	public TurnOnShooterCommand(Shooter shooter) 
+	{
+		
 	}
 	
     @Override
-    protected void execute() {
-    	
+    protected void execute()
+    {
+    	shooter.setShooterGatePosition();
+    	shooter.turnOnShooterWheel();
+    	shooter.turnOnConveyor();
+    	shooter.setLaoderWheelPositionDown();
     }
 
     @Override

@@ -14,7 +14,12 @@ public class TurnOffShooterCommand extends Command {
 	}
 	
     @Override
-    protected void execute() {
+    protected void execute() 
+    {
+    	shooter.turnOffConveyor();
+    	shooter.setLoaderGatePosition();
+    	shooter.setLaoderWheelPositionUp();
+    	shooter.turnOffShooterWheel();
     }
 
     @Override

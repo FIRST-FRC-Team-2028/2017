@@ -14,7 +14,12 @@ public class TurnOnLoaderCommand extends Command {
 	}
 	
     @Override
-    protected void execute() {
+    protected void execute() 
+    {
+    	shooter.setLoaderGatePosition();
+    	shooter.turnOnConveyor();
+    	shooter.turnOnLoaderWheel();
+    	shooter.setLaoderWheelPositionDown();
     }
 
     @Override
