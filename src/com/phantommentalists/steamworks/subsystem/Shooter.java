@@ -4,6 +4,7 @@ import com.ctre.CANTalon;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
 import com.phantommentalists.steamworks.Parameters.CanId;
+import com.phantommentalists.steamworks.Parameters.Pid;
 import com.phantommentalists.steamworks.Parameters.PneumaticChannel;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -41,64 +42,33 @@ public class Shooter extends Subsystem {
      * 
      */
     private Solenoid gateCloseSolenoid;
+
+	private boolean shooting = false;
+	
+	private boolean amIOff = false;
     
-    /**
-     * 
-     */
-    private Solenoid loadingWheelOpen;
-    
-    /**
-     * 
-     */
-    private Solenoid loadingWheelClose;
     /**
      * Constructor.  This method is responsible for initializing a new Shooter instance.
      */
     
-    
-    private double f=00;
-    
-    private double p=00;
-    
-    private double d=00;
-    
-    private double i=00;
-    
     @objid ("732b1b92-b601-477c-ab75-004c7e1b6814")
-    public Shooter(CanId wheelCanId, CanId conveyorCanId, PneumaticChannel openSolenoid, PneumaticChannel closeSolenoid, PneumaticChannel upSolenoid ,PneumaticChannel downSolenoid) {
+    public Shooter(CanId wheelCanId, CanId conveyorCanId, PneumaticChannel openSolenoid, PneumaticChannel closeSolenoid, Pid shooterWheelPid) {
     	wheelMotor = new CANTalon(wheelCanId.getId());
     	wheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
     	wheelMotor.enableBrakeMode(true);
-    	wheelMotor.setF(f);
-    	wheelMotor.setP(p);
-    	wheelMotor.setI(i);
-    	wheelMotor.setD(d);
+    	wheelMotor.setF(shooterWheelPid.getF());
+    	wheelMotor.setP(shooterWheelPid.getP());
+    	wheelMotor.setI(shooterWheelPid.getI());
+    	wheelMotor.setD(shooterWheelPid.getD());
     	wheelMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 //    	wheelMotor.set
-    	
     	conveyorMotor = new CANTalon(conveyorCanId.getId());
     	conveyorMotor.enableBrakeMode(true);
     	
-    	
     	gateOpenSolenoid = new Solenoid(openSolenoid.getChannel());
     	
-    	
     	gateCloseSolenoid = new Solenoid(closeSolenoid.getChannel());
-    	
-    	loadingWheelOpen = new Solenoid(upSolenoid.getChannel());
-    	
-    	loadingWheelClose = new Solenoid(downSolenoid.getChannel());
-    	
     }
-    
-    public void determinemode()
-    {
-    	
-    	
-    	
-    	
-    }
-    
     
     /*
      * This method will turn on the conveyor belt.
@@ -106,8 +76,7 @@ public class Shooter extends Subsystem {
     @objid ("abb1320d-1f8b-4314-99f3-3b7aecfb78d2")
     public void turnOnConveyor() 
     {
-    	conveyorMotor.set(1);
-    	
+    	conveyorMotor.set(Parameters.CONVEYOR_SET_SPEED);
     }
 
     /*
@@ -120,14 +89,27 @@ public class Shooter extends Subsystem {
     }
 
     /*
-     * This method will turn on the shooter and run the proper PID.
+     * This method will turn on the shooter wheel at the shooting RPM.
      */
     @objid ("68e94877-afe1-4880-9814-1f35bbd1f035")
-    public void turnOnShooterWheel() 
+    public void turnOnWheelToShoot() 
     {
-    	wheelMotor.set(10);
+    	wheelMotor.set(Parameters.SHOOTER_WHEEL_SHOOT_SPEED);
+    	shooting = true;
+    	amIOff=false;
     }
-
+    
+    /*
+     * This method will turn on the shooter wheel at the loading RPM.
+     */
+    @objid ("68e94877-afe1-4880-9814-1f35bbd1f035")
+    public void turnOnWheelToLoad() 
+    {
+    	wheelMotor.set(Parameters.SHOOTER_WHEEL_LOAD_SPEED);
+    	shooting = false;
+    	amIOff=false;
+    }
+    
     /*
      * This method will turn off the shooter
      */
@@ -135,15 +117,8 @@ public class Shooter extends Subsystem {
     public void turnOffShooterWheel() 
     {
     	wheelMotor.set(0);
-    	
-    }
-
-    /*
-     * This method will make the loading wheel spin at a slower speed.
-     */
-    @objid ("ddc2d195-e75a-46c0-a585-628acfb8e660")
-    public void turnOnLoaderWheel() {
-    	wheelMotor.set(0);
+    	shooting = false;
+    	amIOff=true;
     }
 
     /**
@@ -169,37 +144,54 @@ public class Shooter extends Subsystem {
     @objid ("ba8d49b7-1823-482d-bd89-e96e6ac9370c")
     public boolean isShooterUpToSpeed() 
     {
-        // TODO Auto-generated method stub
-        return false;
+    	boolean upToSpeed = false;
+    	if (isShooterWheelRunning()) {
+    		// We know the shooter wheel is running
+    		if (shooting)
+    		{
+    			// Compare shooter wheel's speed to shoot setpoint
+    			upToSpeed = isSpeedCloseEnough(Parameters.SHOOTER_WHEEL_SHOOT_SPEED);
+    		}
+    		else
+    		{
+    			// Compare shooter wheel's speed to load setpoint
+    			upToSpeed = isSpeedCloseEnough(Parameters.SHOOTER_WHEEL_LOAD_SPEED);
+    		}
+    	}
+    	return upToSpeed;
     }
     
-    /*
-     * This method keeps the loading wheel up.
-     */
+    private boolean isSpeedCloseEnough(double setpoint) {
+    	boolean closeEnough = false;
+    	double currentSpeed = wheelMotor.get();
+    	
+    	if (Math.abs(currentSpeed - setpoint) <= Parameters.SHOOTER_WHEEL_SHOOT_SPEED_CLOSE_ENOUGH) 
+    	{
+    		closeEnough = true;
+    	}
+    	
+    	return closeEnough;
+    }
     
-    public void setLaoderWheelPositionUp()
+    private boolean isShooterWheelRunning() {
+    	boolean running = false;
+    	
+    	if (shooting = true)
+    	{
+    		running = true;
+    	}
+    	
+    	return running;
+    }
+    public boolean isShooterOff()
     {
-    	loadingWheelOpen.set(false);
-    	loadingWheelClose.set(true);
+    	boolean isOff=false;
+    	
+    	if (amIOff)
+    	{
+    		isOff=true;
+    	}
+    	
+    	return isOff;
     }
-
-    /*
-     * This method lets the loading wheel down.
-     */
-    
-    public void setLaoderWheelPositionDown()
-    {
-    	loadingWheelOpen.set(true);
-    	loadingWheelClose.set(false);
-    }
-    
-    @objid ("4d2905ae-6240-4a38-a21a-68aefe11c32f")
-    @Override
-    protected void initDefaultCommand() 
-    {
-        // TODO Auto-generated method stub
-    }
-
-    
-
 }

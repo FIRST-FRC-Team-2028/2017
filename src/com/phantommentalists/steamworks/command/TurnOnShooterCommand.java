@@ -18,16 +18,12 @@ public class TurnOnShooterCommand extends Command {
     @Override
     protected void execute()
     {
-    	shooter.setShooterGatePosition();
-    	shooter.turnOnShooterWheel();
-    	shooter.turnOnConveyor();
-    	shooter.setLaoderWheelPositionDown();
+    	shooter.turnOnWheelToShoot();
     }
 
     @Override
     protected boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        return isShooterWheelUpToSpeed();
     }
 
     @Override
@@ -35,7 +31,8 @@ public class TurnOnShooterCommand extends Command {
     }
 
 	@Override
-	protected void end() {
+	protected void end() 
+	{
 		// TODO Auto-generated method stub
 		
 	}
@@ -44,5 +41,9 @@ public class TurnOnShooterCommand extends Command {
 	protected void interrupted() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private boolean isShooterWheelUpToSpeed() {
+		return shooter.isShooterUpToSpeed();
 	}
 }

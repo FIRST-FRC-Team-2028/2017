@@ -16,31 +16,35 @@ public class TurnOffShooterCommand extends Command {
     @Override
     protected void execute() 
     {
-    	shooter.turnOffConveyor();
-    	shooter.setLoaderGatePosition();
-    	shooter.setLaoderWheelPositionUp();
     	shooter.turnOffShooterWheel();
     }
 
     @Override
     protected boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        return isShooterWheelOff();
     }
 
+    
+    private boolean isShooterWheelOff()
+    {
+    	return shooter.isShooterOff();
+    }
+    
     @Override
-    protected void initialize() {
+    protected void initialize() 
+    {
+    	
     }
 
 	@Override
-	protected void end() {
+	protected void end()
+	{
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	protected void interrupted() {
+	protected void interrupted()
+	{
 		// TODO Auto-generated method stub
-		
 	}
 }
