@@ -7,6 +7,7 @@ import com.phantommentalists.steamworks.component.DriveSide;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
+//github.com/FIRST-FRC-Team-2028/2017.git
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("f83fed2a-c93a-4529-87d2-2c458cd5d09e")
@@ -26,8 +27,8 @@ public class Drivetrain extends Subsystem {
     	leftSide = new DriveSide(Parameters.SideOfRobot.LEFT);
     	rightSide = new DriveSide(Parameters.SideOfRobot.RIGHT);
     	
-    	lowGear = new Solenoid(Parameters.PneumaticChannel.LOW_GEAR.getChannel());
-    	highGear = new Solenoid(Parameters.PneumaticChannel.HIGH_GEAR.getChannel());
+    	lowGear = new Solenoid(Parameters.PneumaticChannel.DRIVE_LOW_GEAR.getChannel());
+    	highGear = new Solenoid(Parameters.PneumaticChannel.DRIVE_RIGHT_GEAR.getChannel());
     	
     	highGear.set(false);
     	lowGear.set(true);

@@ -5,7 +5,6 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters.CanId;
-import com.phantommentalists.steamworks.Parameters;
 
 @objid ("f16bbd7c-a0a7-48f8-bff4-440291cc5fb4")
 public class Wheel {

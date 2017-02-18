@@ -92,8 +92,13 @@ public class Parameters {
 
     @objid ("27e8d34d-3b02-4e82-9351-eaba0bd459d2")
     public enum PneumaticChannel {
-        LOW_GEAR(0),
-        HIGH_GEAR(7);
+    	SHOOTER_GATE_OPEN(0),
+    	SHOOTER_GATE_CLOSE(1),
+    	GEAR_GOBBLER_FLAP(2),
+    	DRIVE_LOW_GEAR(3),
+    	DRIVE_RIGHT_GEAR(4),
+    	OPEN_LOADER_WHEEL_HOLDER(5),
+    	CLOSE_LOADER_WHEEL_HOLDER(6);
         
         private int channel;
         
@@ -113,4 +118,9 @@ public class Parameters {
     //Field of view in degrees
     public static int xPixyFOV = 75;
     public static int yPixyFOV = 47;
+	public static final double SHOOTER_WHEEL_LOAD_SETPOINT = 0;
+	public static final double SHOOTER_WHEEL_SHOOT_SETPOINT = 0;
+	public static final double CONVEYOR_SPEED = 0;
+
+    
 }
