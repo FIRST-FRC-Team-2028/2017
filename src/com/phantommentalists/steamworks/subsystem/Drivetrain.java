@@ -1,7 +1,12 @@
 package com.phantommentalists.steamworks.subsystem;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters;
+import com.phantommentalists.steamworks.command.CrabDriveCommand;
 import com.phantommentalists.steamworks.component.DriveSide;
+
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("f83fed2a-c93a-4529-87d2-2c458cd5d09e")
@@ -12,10 +17,124 @@ public class Drivetrain extends Subsystem {
     @objid ("d695e0ae-d79b-4e54-86e2-c5d628a64e28")
     private DriveSide rightSide;
 
+    private Solenoid lowGear,highGear;
+    
+    private Command defaultCommand;
+    
+    public Drivetrain()
+    {
+    	leftSide = new DriveSide(Parameters.SideOfRobot.LEFT);
+    	rightSide = new DriveSide(Parameters.SideOfRobot.RIGHT);
+    	
+    	lowGear = new Solenoid(Parameters.PneumaticChannel.LOW_GEAR.getChannel());
+    	highGear = new Solenoid(Parameters.PneumaticChannel.HIGH_GEAR.getChannel());
+    	
+    	highGear.set(false);
+    	lowGear.set(true);
+    }
+    
+    public void crabDrive(double angle, double speed)
+    {
+    	angle += 0.5;
+    	leftSide.crabDrive(angle, speed);
+    	rightSide.crabDrive(angle, speed);
+    	
+		double sumCurAngle =0;
+//		double angle = 0;
+//		double sumPrevQuarterAngle = 0;
+//		double prevQuarterAngle = angle-0.25;
+//		double sumNextQuarterAngle = 0;
+//		double nextQuarterAngle = angle+0.25;
+		
+//		Beginning of test code
+		if(sumCurAngle >= 0.5)
+		{
+//			System.out.println("Positive");;
+		}
+		else if(sumCurAngle <= 0.5)
+		{
+//			System.out.println("Negative");
+		}
+		else
+		{
+//			System.out.println("Failed");
+		}
+//		Ending of test code
+    	
+//    	if(stick.getRawAxis(0) > 0)
+//    	{
+//    		speed = -speed
+//    	} 
+//    	else if(stick.getRawAxis(0) < 0)
+//    	{
+//    		speed = speed
+//    	}
+//    	else
+//    	{
+//    		System.out.println(Failed);
+//    	}
+    }
+    
+    public void swerveDrive(double angle, double speed)
+    {
+//    	System.out.println("Sw: "+angle);
+//    	angle*=0.125;
+//    	angle += 0.5;
+//    	System.out.println("SW After: "+angle);
+		double in = ((45.0/360.0)*angle);
+		double out = ((16.97/360.0)*angle);
+		if(angle > 0)
+		{
+//			System.out.println("here");
+			leftSide.swerveDrive(in, speed);
+			rightSide.swerveDrive(out, speed);
+		}
+		else
+		{
+			leftSide.swerveDrive(out, speed);
+			rightSide.swerveDrive(in, speed);
+		}
+    }
+    
+    public void spinOnAxis(double speed)
+    {
+    	leftSide.spinOnAxis(speed);
+    	rightSide.spinOnAxis(speed);
+    }
+    
+    public void setLowGear()
+    {
+    	highGear.set(false);
+    	lowGear.set(true);
+//    	System.out.println("Hi");
+    }
+    
+    public void setHighGear()
+    {
+    	lowGear.set(false);
+    	highGear.set(true);
+    }
+    
+    public void printNeededOffsets()
+    {
+    	leftSide.printNeededOffsets();
+    	rightSide.printNeededOffsets();
+    }
+    
+    public void enableTurning(boolean enable)
+    {
+    	leftSide.enableTurngin(enable);
+    	rightSide.enableTurngin(enable);
+    }
+
+    
     @objid ("ae9970ca-0edb-45bf-847b-2edc45564f8d")
     @Override
     protected void initDefaultCommand() {
-        // TODO Auto-generated method stub
+    	defaultCommand = new CrabDriveCommand(this);
+//		System.out.println("InitDef");
+		setDefaultCommand(defaultCommand);
     }
 
+    
 }

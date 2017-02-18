@@ -9,14 +9,24 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CrabDriveCommand extends Command {
     @objid ("82003ad0-b55d-4027-b1bf-c19f6b3d0f16")
     private Drivetrain drivetrain;
+    
+    private double angle=0, speed=0;
 
     @objid ("1e72b4ad-7dfd-4b83-84be-fa89d3252097")
     public CrabDriveCommand(Drivetrain drivetrain) {
+    	requires(drivetrain);
     }
 
+    public void setCrabDrive(double angle, double speed)
+    {
+    	this.angle = angle;
+    	this.speed = speed;
+    }
+    
     @objid ("541d2e03-3fdd-4cfa-9d1e-d2aa9f5c7a3a")
     @Override
     protected void execute() {
+    	drivetrain.crabDrive(angle, speed);
     }
 
     @objid ("f3162078-8211-432f-9b18-0690658db05f")

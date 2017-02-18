@@ -19,9 +19,12 @@ public class DriveSide {
 
     @objid ("72f08bc9-85ba-475a-9954-6a0937e05288")
     private CANTalon followerMotor;
+    
+    private SideOfRobot side;
 
     @objid ("98ac2b28-8b68-492e-a31c-8c2da6913de5")
     public DriveSide(SideOfRobot side) {
+    	this.side=side;
         switch(side)
         {
         case RIGHT:
@@ -41,19 +44,74 @@ public class DriveSide {
         }
     }
     
+    public void setSpeed(double speed)
+    {
+//    	if(frontWheel.getPosition() > 0.25 || frontWheel.getPosition() == 0.5)
+//    	{
+//    		masterMotor.set(speed);
+//    	}
+//    	else if(frontWheel.getPosition() < 0.25 || frontWheel.getPosition() == 0)
+//    	{
+//    		masterMotor.set(-speed);
+//    	}
+//    	else
+//    	{
+//    		masterMotor.set(0);
+//    	}
+    	masterMotor.set(speed);
+    	followerMotor.set(speed);
+    }
+    
     public void crabDrive(double angle, double speed)
     {
-    	
+    	frontWheel.setPosition(angle);
+    	rearWheel.setPosition(angle);
+    	setSpeed(speed);
     }
     
     public void swerveDrive(double angle, double speed)
     {
-    	
+//    	System.out.println(side + " angle: "+angle);
+    	switch(side)
+    	{
+    	case LEFT:
+    		frontWheel.setPosition(-angle);
+    		rearWheel.setPosition(angle);
+    		break;
+    	case RIGHT:
+    		frontWheel.setPosition(-angle);
+    		rearWheel.setPosition(angle);
+    		break;
+    	default:
+    		
+    	}
+    	setSpeed(speed);
     }
     
     public void spinOnAxis(double speed)
     {
-    	
+    	switch(side)
+    	{
+    	case LEFT:
+    		swerveDrive(-0.125,-speed);
+    		break;
+    	case RIGHT:
+    		swerveDrive(0.125,speed);
+    		break;
+    	default:
+    	}
     }
+
+	public void printNeededOffsets()
+	{
+		frontWheel.printNeededOffsets();
+		rearWheel.printNeededOffsets();
+	}
+
+	public void enableTurngin(boolean enable)
+	{
+		frontWheel.enableTurning(enable);
+		rearWheel.enableTurning(enable);
+	}
 
 }

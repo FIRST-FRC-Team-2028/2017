@@ -1,31 +1,53 @@
 package com.phantommentalists.steamworks;
 
-import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import java.awt.Dimension;
 
-@objid ("876e8fc9-903b-460c-9059-968a24a258c9")
 public class VisionTarget {
-    @objid ("cdcd87ec-38df-4889-b23e-d1e1bec6bc6d")
-    public int x;
+	
+	public static double pixyResx= Parameters.pixyResx,pixyResy = Parameters.pixyResy;
+	public static double xFOV = Parameters.xPixyFOV;
+	public static double yFOV = Parameters.yPixyFOV;
+	
+    public double x;
 
-    @objid ("9512b235-b318-46db-9ef6-ad27b0a434f2")
-    public int y;
+    public double y;
 
-    @objid ("e112b69a-3874-4da1-b4f0-16335cdcee3a")
-    public int width;
+    public double width;
 
-    @objid ("2bfe0e81-612c-40c9-9d7e-0ce33127d512")
-    public int length;
+    public double height;
+    
+    public double area;
+    
+    //Angle from center
+    public double xAFC;
+    public double yAFC;
 
-    @objid ("56737ddb-15ab-40ba-9324-e6bcb0d2f2cb")
-    public int getSize() {
+    public VisionTarget(double x, double y, double width, double height)
+    {
+    	this.x = x;
+    	this.y = y;
+    	this.width = width;
+    	this.height = height;
+    	System.out.println("\nX: "+x);
+    	System.out.println("Y: "+y);
+    	System.out.println("W: "+width);
+    	System.out.println("H: "+height);
+    	area = width*height;
+    	xAFC = (x+(width/2))-(pixyResx/2);
+    	System.out.println(xAFC);
+    	xAFC = ( xAFC / (pixyResx/2) );
+    	yAFC = ( ( (y+(height/2)) - (pixyResy/2) ) / (pixyResy/2) ) * (yFOV/2);
+    	
+    }
+    
+    public double getSize() {
         // TODO Auto-generated method stub
-    	return 0;
+    	return area;
     }
 
-    @objid ("2b8fad08-94da-4fee-8b9c-5f1d981ef3cc")
     public double getAngleToCenter() {
         // TODO Auto-generated method stub
-    	return 0.0;
+    	return xAFC;
     }
 
 }

@@ -6,17 +6,17 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 public class Parameters {
     @objid ("53c209e9-b5d2-4210-a4ad-4673956bef36")
     public enum CanId {
-        DRIVE_RIGHT_MASTER (12, false),
-        DRIVE_RIGHT_FOLLOWER (21, false),
-        DRIVE_LEFT_MASTER (13, false),
-        DRIVE_LEFT_FOLLOWER (31, false),
-        STEERING_LEFT_FRONT (41, false),
-        STEERING_RIGHT_FRONT (42, false),
-        STEERING_LEFT_REAR (43, false),
-        STEERING_RIGHT_REAR (44, false),
-        SHOOTER_WHEEL (51, false),
-        SHOOTER_CONVEYOR (52, false),
-        CLIMBER_MOTOR (61, false);
+    	DRIVE_RIGHT_MASTER (23, false),
+        DRIVE_RIGHT_FOLLOWER (32, false),
+        DRIVE_LEFT_MASTER (14, false),
+        DRIVE_LEFT_FOLLOWER (41, false),
+        STEERING_LEFT_FRONT (10, false),
+        STEERING_RIGHT_FRONT (20, false),
+        STEERING_LEFT_REAR (40, false),
+        STEERING_RIGHT_REAR (30, false),
+        SHOOTER_WHEEL (0, false),
+        SHOOTER_CONVEYOR (0, false),
+        CLIMBER_MOTOR (0, false);
 
         @objid ("c7fdac8d-8d3f-466c-99bb-871eee680012")
         private int canID;
@@ -72,12 +72,45 @@ public class Parameters {
 
     @objid ("bbc5f44b-b03f-477c-a1d7-8f1206abeff7")
     public enum Buttons {
-        ;
-    }
+        SWEARVE(2),
+        SPIN_ON_AXIS(1),
+        SHIFT_LOW_GEAR(3),
+        SHIFT_HIGH_GEAR(4);
+        
+        private int id;
+        
+        private Buttons(int id)
+        {
+     	   this.id = id;
+        }
+        
+        public int getID()
+        {
+     	   return id;
+        }
+     }
 
     @objid ("27e8d34d-3b02-4e82-9351-eaba0bd459d2")
     public enum PneumaticChannel {
-        ;
+        LOW_GEAR(0),
+        HIGH_GEAR(7);
+        
+        private int channel;
+        
+        private PneumaticChannel(int channel)
+        {
+        	this.channel = channel;
+        }
+        
+        public int getChannel()
+        {
+        	return channel;
+        }
     }
 
+    public static int pixyResx = 320; //Could be 320 or 640 
+    public static int pixyResy = 200; //Could be 200 or 400
+    //Field of view in degrees
+    public static int xPixyFOV = 75;
+    public static int yPixyFOV = 47;
 }
