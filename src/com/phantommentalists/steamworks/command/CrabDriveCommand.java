@@ -15,6 +15,7 @@ public class CrabDriveCommand extends Command {
     @objid ("1e72b4ad-7dfd-4b83-84be-fa89d3252097")
     public CrabDriveCommand(Drivetrain drivetrain) {
     	requires(drivetrain);
+    	this.drivetrain = drivetrain;
     }
 
     public void setCrabDrive(double angle, double speed)
@@ -25,7 +26,8 @@ public class CrabDriveCommand extends Command {
     
     @objid ("541d2e03-3fdd-4cfa-9d1e-d2aa9f5c7a3a")
     @Override
-    protected void execute() {
+    protected void execute() 
+    {
     	drivetrain.crabDrive(angle, speed);
     }
 

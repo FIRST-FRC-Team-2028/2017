@@ -87,10 +87,10 @@ public class Telepath extends IterativeRobot {
     	Scheduler.getInstance().run();
     }
 
-    @Override
-    @objid ("d4573f62-3f85-40b0-94f2-673a79e3d9d8")
-    public void startCompetition() {
-    }
+//    @Override
+//    @objid ("d4573f62-3f85-40b0-94f2-673a79e3d9d8")
+//    public void startCompetition() {
+//    }
 
     @Override
     @objid ("ca63651a-1b48-4fda-9a4d-649cf66bba2f")
@@ -107,6 +107,18 @@ public class Telepath extends IterativeRobot {
     public void disabledPeriodic() {
     }
 
+    @Override
+    public void testInit()
+    {
+    	drivetrain.enableTurning(false);
+    }
+    
+    @Override
+    public void testPeriodic()
+    {
+    	drivetrain.printNeededOffsets();
+    }
+    
     @objid ("aed20313-389b-4a3c-b333-d763e6cd1572")
     public Telepath() {
     	onestick = new Joystick(5);
