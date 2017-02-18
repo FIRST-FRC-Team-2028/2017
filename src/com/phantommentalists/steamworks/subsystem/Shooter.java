@@ -8,6 +8,7 @@ import com.phantommentalists.steamworks.Parameters.Pid;
 import com.phantommentalists.steamworks.Parameters.PneumaticChannel;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -27,30 +28,27 @@ public class Shooter extends Subsystem {
     @objid ("c89532f8-ad05-46f5-8c40-8834ab21f172")
     private CANTalon wheelMotor;
 
-    /**
-     * 
-     */
+    /**   can id of wheel motor  */
     @objid ("39f50a55-9553-4bf4-8026-d40058cb7a83")
     private CANTalon conveyorMotor;
 
-    /**
-     * 
-     */
+    /**   solinoid variable for gate*/
     private Solenoid gateOpenSolenoid;
     
-    /**
-     * 
-     */
+    /**  soliniod variable for gate   */
     private Solenoid gateCloseSolenoid;
 
-	private boolean shooting = false;
+    /**  notifies commands if shooting  */
+	private boolean amIShooting = false;
 	
-	private boolean amIOff = false;
-    
+	/** class member that indicates if the shooter wheel is off */
+	private boolean amIOff = true;
+    /** notifies commands if loading  */
+	private boolean amILoading = false;
+	
     /**
      * Constructor.  This method is responsible for initializing a new Shooter instance.
      */
-    
     @objid ("732b1b92-b601-477c-ab75-004c7e1b6814")
     public Shooter(CanId wheelCanId, CanId conveyorCanId, PneumaticChannel openSolenoid, PneumaticChannel closeSolenoid, Pid shooterWheelPid) {
     	wheelMotor = new CANTalon(wheelCanId.getId());
@@ -61,15 +59,18 @@ public class Shooter extends Subsystem {
     	wheelMotor.setI(shooterWheelPid.getI());
     	wheelMotor.setD(shooterWheelPid.getD());
     	wheelMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-//    	wheelMotor.set
     	conveyorMotor = new CANTalon(conveyorCanId.getId());
     	conveyorMotor.enableBrakeMode(true);
     	
     	gateOpenSolenoid = new Solenoid(openSolenoid.getChannel());
     	
     	gateCloseSolenoid = new Solenoid(closeSolenoid.getChannel());
+    	
+    	wheelMotor.enable();
+    	
+    	conveyorMotor.enable();
     }
-    
+   
     /*
      * This method will turn on the conveyor belt.
      */
@@ -95,8 +96,9 @@ public class Shooter extends Subsystem {
     public void turnOnWheelToShoot() 
     {
     	wheelMotor.set(Parameters.SHOOTER_WHEEL_SHOOT_SPEED);
-    	shooting = true;
+    	amIShooting = true;
     	amIOff=false;
+    	amILoading=false;
     }
     
     /*
@@ -106,8 +108,9 @@ public class Shooter extends Subsystem {
     public void turnOnWheelToLoad() 
     {
     	wheelMotor.set(Parameters.SHOOTER_WHEEL_LOAD_SPEED);
-    	shooting = false;
+    	amIShooting = false;
     	amIOff=false;
+    	amILoading=true;
     }
     
     /*
@@ -117,8 +120,9 @@ public class Shooter extends Subsystem {
     public void turnOffShooterWheel() 
     {
     	wheelMotor.set(0);
-    	shooting = false;
+    	amIShooting = false;
     	amIOff=true;
+    	amILoading=false;
     }
 
     /**
@@ -141,13 +145,17 @@ public class Shooter extends Subsystem {
     	gateCloseSolenoid.set(true);
     }
 
+    /**
+     * determines if the shooter is fast enough 
+     * @return  that the shooter is fast enough
+     */
     @objid ("ba8d49b7-1823-482d-bd89-e96e6ac9370c")
     public boolean isShooterUpToSpeed() 
     {
     	boolean upToSpeed = false;
     	if (isShooterWheelRunning()) {
     		// We know the shooter wheel is running
-    		if (shooting)
+    		if (amIShooting)
     		{
     			// Compare shooter wheel's speed to shoot setpoint
     			upToSpeed = isSpeedCloseEnough(Parameters.SHOOTER_WHEEL_SHOOT_SPEED);
@@ -161,6 +169,11 @@ public class Shooter extends Subsystem {
     	return upToSpeed;
     }
     
+    /**
+     * 
+     * @param setpoint speed that is close enough
+     * @return if speed is close enough
+     */
     private boolean isSpeedCloseEnough(double setpoint) {
     	boolean closeEnough = false;
     	double currentSpeed = wheelMotor.get();
@@ -173,25 +186,36 @@ public class Shooter extends Subsystem {
     	return closeEnough;
     }
     
+    /**
+     * determines if the shooting wheel is in the running state
+     * @return if the shooting wheel is in the running state
+     */
     private boolean isShooterWheelRunning() {
     	boolean running = false;
     	
-    	if (shooting = true)
+    	if (amIShooting = true)
     	{
     		running = true;
     	}
     	
     	return running;
     }
+    
+    /**
+     * 
+     * @return
+     */
     public boolean isShooterOff()
     {
-    	boolean isOff=false;
-    	
-    	if (amIOff)
-    	{
-    		isOff=true;
-    	}
-    	
-    	return isOff;
+    	return amIOff;
     }
+
+    /**
+     * Shooter does not have a default command
+     */
+	@Override
+	protected void initDefaultCommand() {
+		// This method intentionally left blank
+		
+	}
 }

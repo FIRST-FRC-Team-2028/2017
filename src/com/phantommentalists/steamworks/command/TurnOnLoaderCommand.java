@@ -26,19 +26,22 @@ public class TurnOnLoaderCommand extends Command {
         return false;
     }
 
+    /**  stuff done when initialized currently nothing  */
     @Override
     protected void initialize() {
+    	// This method intentionally left blank
     }
 
+    /**  stuff done when end currently nothing   */
 	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		
+	protected void end() 
+	{
+    	// This method intentionally left blank
 	}
 
+	/**  stuff done when interrupted currently nothing  */
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
+    	// This method intentionally left blank
 	}
 }
