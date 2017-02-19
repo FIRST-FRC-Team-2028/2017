@@ -44,7 +44,7 @@ public class Shooter extends Subsystem {
 	/** class member that indicates if the shooter wheel is off */
 	private boolean amIOff = true;
     /** notifies commands if loading  */
-	private boolean amILoading = false;
+	protected boolean amILoading = false;
 	
     /**
      * Constructor.  This method is responsible for initializing a new Shooter instance.
@@ -77,7 +77,7 @@ public class Shooter extends Subsystem {
     @objid ("abb1320d-1f8b-4314-99f3-3b7aecfb78d2")
     public void turnOnConveyor() 
     {
-    	conveyorMotor.set(Parameters.CONVEYOR_SET_SPEED);
+    	conveyorMotor.set(Parameters.CONVEYOR_SPEED);
     }
 
     /*
@@ -174,7 +174,8 @@ public class Shooter extends Subsystem {
      * @param setpoint speed that is close enough
      * @return if speed is close enough
      */
-    private boolean isSpeedCloseEnough(double setpoint) {
+    
+    protected boolean isSpeedCloseEnough(double setpoint) {
     	boolean closeEnough = false;
     	double currentSpeed = wheelMotor.get();
     	
@@ -190,7 +191,8 @@ public class Shooter extends Subsystem {
      * determines if the shooting wheel is in the running state
      * @return if the shooting wheel is in the running state
      */
-    private boolean isShooterWheelRunning() {
+    
+    protected boolean isShooterWheelRunning() {
     	boolean running = false;
     	
     	if (amIShooting = true)
