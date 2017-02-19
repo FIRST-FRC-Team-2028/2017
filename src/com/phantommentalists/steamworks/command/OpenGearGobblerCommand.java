@@ -14,6 +14,8 @@ public class OpenGearGobblerCommand extends Command
 	public OpenGearGobblerCommand(GearGobbler gearGobbler) 
 	{
 		this.gearGobbler = gearGobbler;
+		requires(gearGobbler);
+		setTimeout(Parameters.GEAR_GOBBLER_OPEN_TIME);
 	}
 
     @Override
@@ -25,28 +27,6 @@ public class OpenGearGobblerCommand extends Command
     @Override
     protected boolean isFinished() 
     {
-        // TODO Auto-generated method stub
-    	return true;
+    	return isTimedOut();
     }
-
-    @Override
-    protected void initialize() 
-    {
-    	
-    }
-
-	@Override
-	protected void end() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void interrupted() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

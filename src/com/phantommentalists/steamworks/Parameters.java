@@ -4,6 +4,11 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("147601fc-4964-44fd-9205-76f83e66cb5d")
 public class Parameters {
+	public final static double AUTONOMOUS_DRIVE_ACROSS_BASELINE_TIME = 3.0;
+	
+	public final static double AUTONOMOUS_DRIVE_SPEED = 0.4;
+
+	public final static double STEERING_STRAIGHT_AHEAD = 0.5;
 	
 	// TODO - Replace with actual values
 	public final static double SHOOTER_WHEEL_SHOOT_SPEED = 10.0;
