@@ -44,10 +44,10 @@ public class Parameters {
 
     @objid ("9ad1c688-70b9-44a6-9d6d-9f13129086ec")
     public enum SteeringOffset {
-        LEFT_FRONT (0),
-        LEFT_REAR (0),
-        RIGHT_FRONT (0),
-        RIGHT_REAR (0);
+        LEFT_FRONT (-0.42),//10
+        RIGHT_FRONT (-0.27),//20
+        RIGHT_REAR (-0.21),//30
+        LEFT_REAR (0.005);//40
 
         @objid ("18ad7371-c09e-43bd-a188-c5e708656a77")
         private double offset;

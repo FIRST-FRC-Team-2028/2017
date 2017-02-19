@@ -2,7 +2,7 @@ package com.phantommentalists.steamworks.subsystem;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
-import com.phantommentalists.steamworks.command.CrabDriveCommand;
+import com.phantommentalists.steamworks.command.DriveCommand;
 import com.phantommentalists.steamworks.component.DriveSide;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -20,7 +20,7 @@ public class Drivetrain extends Subsystem {
 
     private Solenoid lowGear,highGear;
     
-    private Command defaultCommand;
+    private DriveCommand defaultCommand;
     
     public Drivetrain()
     {
@@ -32,35 +32,39 @@ public class Drivetrain extends Subsystem {
     	
     	highGear.set(false);
     	lowGear.set(true);
+    	getDefaultCommand();
     }
     
     public void crabDrive(double angle, double speed)
     {
-    	angle += 0.5;
+//    	System.out.println("crab "+angle);
+//    	angle += 0.5;
+//    	System.out.println("crab aft"+angle);
+
     	leftSide.crabDrive(angle, speed);
     	rightSide.crabDrive(angle, speed);
     	
-		double sumCurAngle =0;
+//		double sumCurAngle =0;
 //		double angle = 0;
 //		double sumPrevQuarterAngle = 0;
 //		double prevQuarterAngle = angle-0.25;
 //		double sumNextQuarterAngle = 0;
 //		double nextQuarterAngle = angle+0.25;
 		
-//		Beginning of test code
-		if(sumCurAngle >= 0.5)
-		{
-//			System.out.println("Positive");;
-		}
-		else if(sumCurAngle <= 0.5)
-		{
-//			System.out.println("Negative");
-		}
-		else
-		{
-//			System.out.println("Failed");
-		}
-//		Ending of test code
+////		Beginning of test code
+//		if(sumCurAngle >= 0.5)
+//		{
+////			System.out.println("Positive");;
+//		}
+//		else if(sumCurAngle <= 0.5)
+//		{
+////			System.out.println("Negative");
+//		}
+//		else
+//		{
+////			System.out.println("Failed");
+//		}
+////		Ending of test code
     	
 //    	if(stick.getRawAxis(0) > 0)
 //    	{
@@ -79,12 +83,14 @@ public class Drivetrain extends Subsystem {
     public void swerveDrive(double angle, double speed)
     {
     	
-//    	System.out.println("Sw: "+angle);
 //    	angle*=0.125;
 //    	angle += 0.5;
+//    	System.out.println("Sw: "+angle);
 //    	System.out.println("SW After: "+angle);
-		double in = ((45.0/360.0)*angle);
-		double out = ((16.97/360.0)*angle);
+		double in = ((45.0/360.0)*(angle));
+		double out = ((16.97/360.0)*(angle));
+		in += 0.5;
+		out += 0.5;
 		if(angle > 0)
 		{
 //			System.out.println("here");
@@ -133,10 +139,14 @@ public class Drivetrain extends Subsystem {
     @objid ("ae9970ca-0edb-45bf-847b-2edc45564f8d")
     @Override
     protected void initDefaultCommand() {
-    	defaultCommand = new CrabDriveCommand(this);
+    	defaultCommand = new DriveCommand(this);
 //		System.out.println("InitDef");
 		setDefaultCommand(defaultCommand);
+		System.out.println("drive: "+defaultCommand);
     }
 
-    
+    public DriveCommand getDefCommand()
+    {
+    	return defaultCommand;
+    }
 }

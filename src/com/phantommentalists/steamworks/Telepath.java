@@ -1,9 +1,8 @@
 package com.phantommentalists.steamworks;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
-import com.phantommentalists.steamworks.command.CrabDriveCommand;
-import com.phantommentalists.steamworks.command.SpinDriveCommand;
-import com.phantommentalists.steamworks.command.SwerveDriveCommand;
+import com.phantommentalists.steamworks.command.DriveCommand;
+import com.phantommentalists.steamworks.command.DriveCommand.DriveType;
 import com.phantommentalists.steamworks.subsystem.Climber;
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 import com.phantommentalists.steamworks.subsystem.GearGobbler;
@@ -33,9 +32,7 @@ public class Telepath extends IterativeRobot {
     @objid ("bcc723c9-717e-4ede-9db3-fbeeb0df0fe5")
     private PixyCamera pixyCamera;
     
-    private CrabDriveCommand crabCommand;
-    private SwerveDriveCommand swerveCommand;
-    private SpinDriveCommand spinCommand;
+    private DriveCommand drivecommand;
     
     public Joystick onestick;
     
@@ -46,12 +43,12 @@ public class Telepath extends IterativeRobot {
     public void robotInit() {
     	System.out.println("here robot init");
     	drivetrain = new Drivetrain();
-    	
-    	swerveCommand = new SwerveDriveCommand(drivetrain);
-    	spinCommand = new SpinDriveCommand(drivetrain);
-    	
+//    	drivetrain.get
+//    	Scheduler.getInstance().enable();
+    	drivecommand = drivetrain.getDefCommand();
+//    	System.out.println("Drive command: "+drivecommand);
 //    	crabCommand = (CrabDriveCommand)drivetrain.
-    	pixyCamera = new PixyCamera();
+//    	pixyCamera = new PixyCamera();
     	
     	
 
@@ -72,6 +69,7 @@ public class Telepath extends IterativeRobot {
     @Override
     @objid ("198d6d2d-b717-47a0-9406-b8edadcc5497")
     public void teleopInit() {
+    	System.out.println("Tele init");
     	drivetrain.enableTurning(true);
     	comp.start();
     }
@@ -84,7 +82,31 @@ public class Telepath extends IterativeRobot {
     @Override
     @objid ("87edd468-04be-4afb-8fa3-cb14e164c58d")
     public void teleopPeriodic() {
+    	
     	Scheduler.getInstance().run();
+    	comp.start();
+    	if(onestick.getRawButton(3))
+    	{
+    		drivecommand.setHighGear(false);
+    	}
+    	else if(onestick.getRawButton(4))
+    	{
+    		drivecommand.setHighGear(true);
+    	}
+    	
+    	drivecommand.setDrive(onestick.getRawAxis(0), -onestick.getRawAxis(1), -onestick.getRawAxis(2));
+    	if(onestick.getRawButton(2))
+    	{
+    		drivecommand.setDriveType(DriveType.SWERVE);
+    	}
+    	else if(onestick.getRawButton(1))
+    	{
+    		drivecommand.setDriveType(DriveType.SPIN);
+    	}
+    	else
+    	{
+    		drivecommand.setDriveType(DriveType.CRAB);
+    	}
     }
 
 //    @Override
@@ -116,6 +138,7 @@ public class Telepath extends IterativeRobot {
     @Override
     public void testPeriodic()
     {
+    	Scheduler.getInstance().run();
     	drivetrain.printNeededOffsets();
     }
     

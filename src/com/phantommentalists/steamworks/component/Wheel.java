@@ -6,6 +6,8 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters.CanId;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 @objid ("f16bbd7c-a0a7-48f8-bff4-440291cc5fb4")
 public class Wheel {
     @objid ("c51f6222-37e6-4b90-a9e7-aa55341e4c1f")
@@ -17,23 +19,24 @@ public class Wheel {
 	/**
 	 * declares the p
 	 */
-	private double p = 9;
+	private double p = 5;
 	
 	/**
 	 * declares the i
 	 */
-	private double i = 0.0002;
+	private double i = 0.00015;
 	
 	/**
 	 * declares the d
 	 */
-	private double d = 0.0;
+	private double d = 0.0002;
 	
 	/**
 	 * allows to access the identity of the current canid
 	 */
 	private int canId = 0;
 	
+	private int constRev =0;
     /**
      * Initializes the Wheel class
      * @param canId The can ID of the motor that controls the wheel
@@ -45,6 +48,7 @@ public class Wheel {
 		steeringMotor.changeControlMode(TalonControlMode.Position);
 		steeringMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		steeringMotor.setPID(p, i, d);
+//		steeringMotor.configMaxOutputVoltage(12);
 		steeringMotor.enable();
 		this.offset = offset;
 		this.canId = canId.getId();
@@ -52,54 +56,71 @@ public class Wheel {
 
     @objid ("41f4a243-6a60-4c8f-9a1c-444c58a88d60")
     public void setPosition(double angle) {
-    	double startingpos = getPosition();					
-		double distance = 0;	
+    	double currentpos = steeringMotor.getPosition()-offset;
+		constRev = (int)currentpos;
+		double nextRev;
+		double currentRev;
+		double prevRev;
 		
-    	startingpos = roundOffToFourDigits(startingpos);
-    	angle = roundOffToFourDigits(angle);
+		if(currentpos < 0)
+		{
+			constRev-=1;
+		}
+		
+		nextRev = constRev+1.0+angle;
+		currentRev = constRev+angle;
+		prevRev = constRev-1.0+angle;
+		
+//		System.out.println("Motor: "+canId);
+//		System.out.println("Goal: "+angle);
+//		System.out.println("Const: "+constRev);
+//		System.out.println("Current pos"+currentpos);
+//		System.out.println("Next rotg"+nextRev);
+//		System.out.println("Current rotg"+currentRev);
+//		System.out.println("Prev rotg"+prevRev);
+//		System.out.println("-------------------------------");
+
+		double dnext = Math.abs(nextRev-currentpos);
+		double dcurr = Math.abs(currentRev-currentpos);
+		double dprev = Math.abs(prevRev-currentpos);
+//		System.out.println("Next: "+dnext);
+//		System.out.println("Curr: "+dcurr);
+//		System.out.println("Prev: "+dprev);
+		if(dnext < dcurr && dnext < dprev)
+			angle = nextRev;
+		else if(dcurr < dnext && dcurr < dprev)
+			angle = currentRev;
+		else if(dprev < dcurr && dprev < dnext)
+			angle = prevRev;
+//		double d0 = Math.abs((wheelMotor.getPosition()-offset)-constRot);
+//		double d1 = Math.abs((wheelMotor.getPosition()-offset)-(constRot+1));
+		
+		//		if(d1 < d0)
+//		{
+//			System.out.println("here");
+//			constRot++;
+//		}
+    	angle +=offset;
     	
-    	System.out.println("pos" + angle);
-    	System.out.println("startingpos" + startingpos);
+//	    	System.out.println("Offset: "+pos);
+    	angle *= Math.pow(10, 3);
+//	    	System.out.println("AM: "+pos);
+    	angle = (int)angle;
+//	    	System.out.println("Int: "+pos);
+    	angle /= Math.pow(10, 3);
+//	    	System.out.println("Div: "+pos);
     	
-    			if (startingpos > angle)
-    			{
-    				distance = startingpos - angle;						
-    			}
-    			else if (startingpos < angle)
-    			{
-    				distance = angle - startingpos;
-    			}
-    			else
-    			{
-    				distance = 0;}
-    			
-    			if (distance >= 1)
-    			{
-    				int distance2 = (int) distance;
-    				distance = distance - distance2;
-    			}
-    			
-    			if(distance > 0.5)
-    			{
-    				angle = startingpos - (1 - distance);
-    			}
-    			else if (distance <= 0.5 && startingpos > 1)
-    			{
-    				startingpos -= distance;
-    			}
-    			else if (distance <= 0.5)
-    			{
-    				startingpos += distance;
-    			}
-    			
-    			System.out.println ("pos" + angle);
-    	    	System.out.println ("startingpos" + startingpos);
-    			
-    	angle += offset;	
-    	angle = roundOffToFourDigits(angle);
-    	steeringMotor.set(angle);								
-    	//current is that 1=-1
-    }
+    	steeringMotor.set(angle);
+//    	return angle;
+//	    wheelMotor.setPosition(pos);
+//	   	{
+//	   	if(wheelMotor != null)
+//	   		wheelMotor.setPosition(0);
+//	  		else
+//   			return pos;
+//		}
+			
+	}
 
     /**
      * 
@@ -117,21 +138,30 @@ public class Wheel {
 
 	public void printNeededOffsets() 
 	{
+		SmartDashboard.putNumber(""+canId+" pos", getPosition());
 		double num = steeringMotor.getPosition()-0.5;
-		System.out.println(canId + " offset needed " + num );
-		System.out.println("\t "+getPosition());
+//		System.out.println(canId + " offset needed " + num );
+//		System.out.println("\t "+getPosition());
+		steeringMotor.set(0.5);
 	}
 	
 	public void enableTurning(boolean enable)
 	{
 		if(enable)
 		{
+			steeringMotor.changeControlMode(TalonControlMode.Position);
 			steeringMotor.enableControl();
+			steeringMotor.enable();
 		}
 		else
 		{
 			System.out.println("Disabled "+canId);
-			steeringMotor.disableControl();
+			steeringMotor.disable();
+			steeringMotor.changeControlMode(TalonControlMode.Voltage);
+			steeringMotor.enable();
+			steeringMotor.set(0.25);
+//			steeringMotor.disableControl();
+//			steeringMotor.disable();
 		}
 	}
 	
@@ -153,9 +183,9 @@ public class Wheel {
 	}
 	
 	private double roundOffToFourDigits(double pos) {
-    	pos *= 10000.0;
+    	pos *= 1000.0;
     	pos = (int)pos;
-    	pos /= 10000.0;
+    	pos /= 1000.0;
     	return pos;
 	}
 	
