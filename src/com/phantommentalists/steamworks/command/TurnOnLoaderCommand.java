@@ -10,32 +10,21 @@ public class TurnOnLoaderCommand extends Command {
 	
 	private Shooter shooter;
 	
-	public TurnOnLoaderCommand(Shooter shooter) {
+	public TurnOnLoaderCommand(Shooter shooter) 
+	{
+		this.shooter = shooter;
 	}
 	
     @Override
-    protected void execute() {
+    protected void execute() 
+    {
+    	shooter.setLoaderGatePosition();
+    	shooter.turnOnConveyor();
+    	shooter.turnOnWheelToLoad();
     }
 
     @Override
     protected boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        return shooter.isShooterUpToSpeed();
     }
-
-    @Override
-    protected void initialize() {
-    }
-
-	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
-	}
 }

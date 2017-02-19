@@ -7,35 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 
 @objid ("b9e78b1e-efbd-443c-bb65-8d4f0dbbb737")
 public class TurnOffShooterCommand extends Command {
-	
+	/** variable for this command*/
 	private Shooter shooter;
-	
+	/**
+	 * Constructor.  It MUST initialize all class memebers.
+	 * 
+	 * @param shooter - access to do shooter stuff
+	 */
 	public TurnOffShooterCommand(Shooter shooter) {
+		this.shooter=shooter;
 	}
 	
+	/**  tells the shooter to stop  */
     @Override
-    protected void execute() {
+    protected void execute() 
+    {
+    	shooter.turnOffShooterWheel();
     }
 
+    
+    /**  determines if this code should stop  */
     @Override
     protected boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        return shooter.isShooterOff();
     }
-
-    @Override
-    protected void initialize() {
-    }
-
-	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
-	}
 }

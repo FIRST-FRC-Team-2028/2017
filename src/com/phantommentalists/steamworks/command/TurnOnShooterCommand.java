@@ -7,36 +7,31 @@ import edu.wpi.first.wpilibj.command.Command;
 
 @objid ("ea30a50c-4f2d-4553-b07f-73af66a1c537")
 public class TurnOnShooterCommand extends Command {
-	
+	/** variable for this command  */
 	private Shooter shooter;
 	
-	public TurnOnShooterCommand(Shooter shooter) {
+	/**
+	 * Constructor.  It MUST initialize all class memebers.
+	 * 
+	 * @param shooter - access to do shooter stuff
+	 */
+	public TurnOnShooterCommand(Shooter shooter) 
+	{
+		this.shooter = shooter;
 	}
 	
+	/** starts wheel spining   */
     @Override
-    protected void execute() {
-    	
+    protected void execute()
+    {
+    	shooter.turnOnWheelToShoot();
+    	shooter.setShooterGatePosition();
+    	shooter.turnOnConveyor();
     }
 
+    /** tells running till command is retired   */
     @Override
     protected boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        return shooter.isShooterUpToSpeed();
     }
-
-    @Override
-    protected void initialize() {
-    }
-
-	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
-		
-	}
 }

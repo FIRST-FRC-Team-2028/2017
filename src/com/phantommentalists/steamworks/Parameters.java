@@ -4,6 +4,19 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("147601fc-4964-44fd-9205-76f83e66cb5d")
 public class Parameters {
+	
+	// TODO - Replace with actual values
+	public final static double SHOOTER_WHEEL_SHOOT_SPEED = 10.0;
+
+	// TODO - Replace with actual values
+	public final static double SHOOTER_WHEEL_LOAD_SPEED = 2.0;
+
+	// TODO - Replace with actual values
+	public final static double CONVEYOR_SET_SPEED = 2.0;
+
+	// TODO - Replace with actual values
+	public final static double SHOOTER_WHEEL_SHOOT_SPEED_CLOSE_ENOUGH = 0.1;
+		
     @objid ("53c209e9-b5d2-4210-a4ad-4673956bef36")
     public enum CanId {
     	DRIVE_RIGHT_MASTER (23, false),
@@ -112,6 +125,50 @@ public class Parameters {
         	return channel;
         }
     }
+    
+    public enum Pid {
+    	/**
+    	 * PID Values to automatically control steering angle 
+    	 * 
+    	 * TODO - Replace with actual values
+    	 */
+    	DRIVE_STEERING(0.0, 0.0, 0.0, 0.0),
+    	
+    	/**
+    	 * PID values to maintain a constant shooter wheel speed
+    	 * 
+    	 * TODO - Replace with actual values
+    	 */
+    	SHOOTER_WHEEL(0.0, 0.0, 0.0, 0.0);
+    	
+    	private double f;
+    	private double p;
+    	private double i;
+    	private double d;
+    	
+    	private Pid(double f, double p, double i, double d) {
+    		this.f = f;
+    		this.p = p;
+    		this.i = i;
+    		this.d = d;
+    	}
+    	
+    	public double getF() {
+    		return f;
+    	}
+    	public double getP() {
+    		return p;
+    	}
+    	
+    	public double getI() {
+    		return i;
+    	}
+    	
+    	public double getD() {
+    		return d;
+    	}
+    }
+
 
     public static int pixyResx = 320; //Could be 320 or 640 
     public static int pixyResy = 200; //Could be 200 or 400
