@@ -10,10 +10,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 @objid ("7f4cd058-1d2d-4a6d-9a50-a3ac0c4836b4")
 public class Climber extends Subsystem
 {
-    @objid ("25dc6539-fcd9-48bd-8998-b7361199f269")
+	@objid ("25dc6539-fcd9-48bd-8998-b7361199f269")
     private CANTalon winchMotor;
 
-
+    @objid ("8e83bd89-9266-4bb6-a84f-11ea55ce94ed")
+    public void turnOn() 
+    {
+    	winchMotor.set(0.0);
+    }
 
     @objid ("93882f5d-5d77-43a5-81a7-07515550eaf6")
     public void turnOff() 
@@ -46,5 +50,4 @@ public class Climber extends Subsystem
     	winchMotor.configEncoderCodesPerRev(1024);
     	winchMotor.enable();
     }
-
 }

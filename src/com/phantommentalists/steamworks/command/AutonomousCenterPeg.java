@@ -14,7 +14,7 @@ public class AutonomousCenterPeg extends CommandGroup {
 
     public AutonomousCenterPeg(Drivetrain drive, GearGobbler gearGobbler,PixyCamera pixy, boolean turnLeft) {
     	addSequential(new TimedCrabDrive(drive, Parameters.AUTONOMOUS_DRIVE_CENTER_PEG_TIME, Parameters.STEERING_STRAIGHT_AHEAD, Parameters.AUTONOMOUS_DRIVE_SPEED));
-    	addSequential(new CenterOnLiftPegCommand(pixy));
+    	addSequential(new AutonomousPlaceGear(pixy,drive));
     	addSequential(new OpenGearGobblerCommand(gearGobbler));
     	addSequential(new TimedCrabDrive(drive, 0.5, Parameters.STEERING_STRAIGHT_AHEAD, -Parameters.AUTONOMOUS_DRIVE_SPEED));
     	addParallel(new CloseGearGobblerCommand(gearGobbler));

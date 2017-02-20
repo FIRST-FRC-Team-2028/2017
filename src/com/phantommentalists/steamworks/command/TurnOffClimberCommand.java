@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnOnClimberCommand extends Command {
+public class TurnOffClimberCommand extends Command {
 
 	Climber climber;
-    public TurnOnClimberCommand(Climber climber) {
+    public TurnOffClimberCommand(Climber climber) {
     	this.climber = climber;
     	requires(climber);
     }
@@ -21,7 +21,7 @@ public class TurnOnClimberCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	climber.turnOn();
+    	climber.turnOff();
     }
 
     // Make this return true when this Command no longer needs to run execute()
