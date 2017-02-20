@@ -16,6 +16,7 @@ public class TurnOffShooterCommand extends Command {
 	 */
 	public TurnOffShooterCommand(Shooter shooter) {
 		this.shooter=shooter;
+		requires(shooter);
 	}
 	
 	/**  tells the shooter to stop  */

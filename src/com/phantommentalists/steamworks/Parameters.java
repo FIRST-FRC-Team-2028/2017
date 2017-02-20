@@ -8,6 +8,10 @@ public class Parameters {
 	
 	public final static double AUTONOMOUS_DRIVE_SPEED = 0.4;
 
+	public final static double AUTONOMOUS_DRIVE_CENTER_PEG_TIME = 0;
+	
+	public final static double AUTONOMOUS_CENTER_PEG_SLEW_TIME =0;
+
 	public final static double STEERING_STRAIGHT_AHEAD = 0.5;
 	
 	// TODO - Replace with actual values
@@ -22,6 +26,13 @@ public class Parameters {
 	// TODO - Replace with actual values
 	public final static double SHOOTER_WHEEL_SHOOT_SPEED_CLOSE_ENOUGH = 0.1;
 		
+	public final static double SHOOTER_WHEEL_LOAD_SETPOINT = 0;
+	public final static double SHOOTER_WHEEL_SHOOT_SETPOINT = 0;
+	public final static double CONVEYOR_SPEED = 0;
+	
+	public final static double GEAR_GOBBLER_CLOSE_TIME =0;
+	public final static double GEAR_GOBBLER_OPEN_TIME =0;
+	
     @objid ("53c209e9-b5d2-4210-a4ad-4673956bef36")
     public enum CanId {
     	DRIVE_RIGHT_MASTER (23, false),
@@ -180,9 +191,6 @@ public class Parameters {
     //Field of view in degrees
     public static int xPixyFOV = 75;
     public static int yPixyFOV = 47;
-	public static final double SHOOTER_WHEEL_LOAD_SETPOINT = 0;
-	public static final double SHOOTER_WHEEL_SHOOT_SETPOINT = 0;
-	public static final double CONVEYOR_SPEED = 0;
 
     
 }

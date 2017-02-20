@@ -2,7 +2,6 @@ package com.phantommentalists.steamworks;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.command.DriveCommand;
-import com.phantommentalists.steamworks.command.DriveCommand.DriveType;
 import com.phantommentalists.steamworks.subsystem.Climber;
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 import com.phantommentalists.steamworks.subsystem.GearGobbler;
@@ -13,6 +12,7 @@ import edu.wpi.first.wpilibj.Compressor;
 //github.com/FIRST-FRC-Team-2028/2017.git
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 @objid ("595898a6-dbcb-4cef-ba25-a6e7f7e35190")
@@ -33,6 +33,8 @@ public class Telepath extends IterativeRobot {
     private PixyCamera pixyCamera;
     
     private DriveCommand drivecommand;
+    
+    private CommandGroup auto;
     
     public Joystick onestick;
     
@@ -63,7 +65,9 @@ public class Telepath extends IterativeRobot {
 
     @Override
     @objid ("dab887d4-4871-4722-aa13-e9fed526eebe")
-    public void autonomousInit() {
+    public void autonomousInit() { 
+    	//TODO:Get auto mode from driver station and setup auto
+    	auto.start();
     }
 
     @Override
@@ -77,6 +81,8 @@ public class Telepath extends IterativeRobot {
     @Override
     @objid ("77311426-3d0c-409a-a086-2bc92e6e89bd")
     public void autonomousPeriodic() {
+    	Scheduler.getInstance().run();
+    	
     }
 
     @Override

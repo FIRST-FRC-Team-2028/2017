@@ -1,6 +1,7 @@
 package com.phantommentalists.steamworks.command;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters;
 import com.phantommentalists.steamworks.subsystem.GearGobbler;
 
 import edu.wpi.first.wpilibj.command.Command;

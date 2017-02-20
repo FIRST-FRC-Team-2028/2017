@@ -1,5 +1,6 @@
 package com.phantommentalists.steamworks.command;
 
+import com.phantommentalists.steamworks.DriveType;
 import com.phantommentalists.steamworks.Parameters.Buttons;
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 
@@ -11,8 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveCommand extends Command {
 
-	static Joystick stick;
-	static Drivetrain drive;
+	Drivetrain drive;
 	
 	static double angle= 0, speed=0, swerveangle =0;
 	
@@ -26,11 +26,6 @@ public class DriveCommand extends Command {
 //    	this.stick = stick;
 //    	fans = Robot.fans;//                       				For Fans
 //    	System.out.println("got here");
-    }
-
-    public enum DriveType
-    {
-    	CRAB, SWERVE, SPIN;
     }
     
     // Called just before this Command runs the first time
@@ -119,11 +114,6 @@ public class DriveCommand extends Command {
     	
 //    	System.out.println("Degree: "+degrees);
     	return new double[] {degrees,volts};
-    }
-    
-    public boolean isButtonPressed(Buttons b)
-    {
-    	return stick.getRawButton(b.getID());
     }
     
     public double normalizeInput(double pos)

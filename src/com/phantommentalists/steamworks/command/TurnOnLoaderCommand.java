@@ -13,6 +13,7 @@ public class TurnOnLoaderCommand extends Command {
 	public TurnOnLoaderCommand(Shooter shooter) 
 	{
 		this.shooter = shooter;
+		requires(shooter);
 	}
 	
     @Override

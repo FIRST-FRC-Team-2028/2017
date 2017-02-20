@@ -5,23 +5,25 @@ import com.phantommentalists.steamworks.subsystem.Drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TimedDrive extends Command{
+public class TimedCrabDrive extends Command{
 	private double speed;
+	private double angle;
 	
 	private Drivetrain drivetrain;
 	
-	public TimedDrive(Drivetrain drive, double sec, double sp)
+	public TimedCrabDrive(Drivetrain drive, double sec, double angle, double sp)
 	{
 		drivetrain = drive;
 		this.requires(drivetrain);
 		this.setTimeout(sec);
 		speed = sp;
+		this.angle = angle;
 	}
 	
 	@Override
 	protected void execute()
 	{
-		drivetrain.crabDrive(Parameters.STEERING_STRAIGHT_AHEAD, speed);
+		drivetrain.crabDrive(angle, speed);
 	}
 	
 	@Override
@@ -33,7 +35,7 @@ public class TimedDrive extends Command{
 	@Override
 	protected boolean isFinished() 
 	{
-		return this.isTimedOut();
+		return isTimedOut();
 	}
 
 }

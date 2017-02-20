@@ -1,16 +1,16 @@
 package com.phantommentalists.steamworks.command;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
-import com.phantommentalists.steamworks.subsystem.GearGobbler;
+import com.phantommentalists.steamworks.subsystem.PixyCamera;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 @objid ("5eb7dc3b-6a5f-49c4-9c98-bb07aaefd0ec")
 public class CenterOnLiftPegCommand extends CommandGroup {
 	
-	private GearGobbler gearGobbler;
+	PixyCamera pixy;
 	
-	public CenterOnLiftPegCommand(GearGobbler gearGobbler) {
+	public CenterOnLiftPegCommand(PixyCamera pixy) {
 	}
 	
     @Override

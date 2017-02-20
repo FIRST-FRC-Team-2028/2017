@@ -18,6 +18,7 @@ public class TurnOnShooterCommand extends Command {
 	public TurnOnShooterCommand(Shooter shooter) 
 	{
 		this.shooter = shooter;
+		requires(shooter);
 	}
 	
 	/** starts wheel spining   */
