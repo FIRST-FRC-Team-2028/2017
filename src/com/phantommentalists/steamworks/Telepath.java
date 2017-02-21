@@ -158,6 +158,7 @@ public class Telepath extends IterativeRobot {
     	drivecommand.setDrive(-onestick.getRawAxis(0), -onestick.getRawAxis(1), onestick.getRawAxis(2));
     	if(onestick.getRawButton(2))
     	{
+    		
     		drivecommand.setDriveType(DriveType.SWERVE);
     	}
     	else if(onestick.getRawButton(1))
@@ -196,6 +197,14 @@ public class Telepath extends IterativeRobot {
     	if (buttonstick.getRawButton(9))
     	{
     		shooter.setLoaderGatePosition();
+    	}
+    	if (buttonstick.getRawButton(8))
+    	{
+    		gearGobbler.openFlap();
+    	}
+    	if (buttonstick.getRawButton(7))
+    	{
+    		gearGobbler.closeFlap();
     	}
     }
 

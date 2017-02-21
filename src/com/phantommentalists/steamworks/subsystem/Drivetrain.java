@@ -1,29 +1,38 @@
 package com.phantommentalists.steamworks.subsystem;
 
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
 import com.phantommentalists.steamworks.command.DriveCommand;
 import com.phantommentalists.steamworks.component.DriveSide;
 
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Command;
 //github.com/FIRST-FRC-Team-2028/2017.git
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("f83fed2a-c93a-4529-87d2-2c458cd5d09e")
 public class Drivetrain extends Subsystem {
+	
     @objid ("055cc2c0-36ba-42d6-975e-661074ba6451")
     private DriveSide leftSide;
 
     @objid ("d695e0ae-d79b-4e54-86e2-c5d628a64e28")
     private DriveSide rightSide;
 
-    private Solenoid lowGear,highGear;
+    private Solenoid lowGear;
+    
+    private Solenoid highGear;
     
     private DriveCommand defaultCommand;
     
+    private CANTalon fan;
+    
+    private boolean driveUsed;
+    
     public Drivetrain()
     {
+    	driveUsed = false;
     	leftSide = new DriveSide(Parameters.SideOfRobot.LEFT);
     	rightSide = new DriveSide(Parameters.SideOfRobot.RIGHT);
     	
@@ -33,10 +42,22 @@ public class Drivetrain extends Subsystem {
     	highGear.set(false);
     	lowGear.set(true);
     	getDefaultCommand();
+    	fan = new CANTalon(Parameters.CanId.FAN.getId());
+    	fan.changeControlMode(TalonControlMode.PercentVbus);
+    	fan.configMaxOutputVoltage(Parameters.FAN_MAX_VOLTAGE);
+    	fan.configNominalOutputVoltage(Parameters.FAN_MAX_VOLTAGE, 0.0);
+    	fan.enableBrakeMode(false);
+    	fan.enable();
+    	
     }
     
     public void crabDrive(double angle, double speed)
     {
+    	if (! driveUsed)
+    	{
+    		driveUsed = true;
+    		fan.set(0.625);
+    	}
 //    	System.out.println("crab "+angle);
 //    	angle += 0.5;
 //    	System.out.println("crab aft"+angle);
@@ -82,6 +103,11 @@ public class Drivetrain extends Subsystem {
     
     public void swerveDrive(double angle, double speed)
     {
+    	if (! driveUsed)
+    	{
+    		driveUsed = true;
+    		fan.set(0.625);
+    	}
     	
 //    	angle*=0.125;
 //    	angle += 0.5;
@@ -106,6 +132,11 @@ public class Drivetrain extends Subsystem {
     
     public void spinOnAxis(double speed)
     {
+    	if (! driveUsed)
+    	{
+    		driveUsed = true;
+    		fan.set(0.625);
+    	}
     	leftSide.spinOnAxis(speed);
     	rightSide.spinOnAxis(speed);
     }

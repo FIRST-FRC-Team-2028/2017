@@ -4,6 +4,9 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("147601fc-4964-44fd-9205-76f83e66cb5d")
 public class Parameters {
+	
+	public final static double FAN_MAX_VOLTAGE = 7.5;
+	
 	public final static double AUTONOMOUS_DRIVE_ACROSS_BASELINE_TIME = 3;
 	
 	public final static double AUTONOMOUS_DRIVE_SPEED = -0.6;
@@ -45,7 +48,8 @@ public class Parameters {
         STEERING_RIGHT_REAR (30, false),
         SHOOTER_WHEEL (52, false),
         SHOOTER_CONVEYOR (51, false),
-        CLIMBER_MOTOR (50, false);
+        CLIMBER_MOTOR (50, false),
+    	FAN(53, false);
 
         @objid ("c7fdac8d-8d3f-466c-99bb-871eee680012")
         private int canID;
