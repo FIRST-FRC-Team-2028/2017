@@ -1,9 +1,10 @@
 package com.phantommentalists.steamworks.subsystem;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters;
+import com.phantommentalists.steamworks.command.TurnOffClimberCommand;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,11 +13,13 @@ public class Climber extends Subsystem
 {
 	@objid ("25dc6539-fcd9-48bd-8998-b7361199f269")
     private CANTalon winchMotor;
+	
+	private TurnOffClimberCommand climberOff;
 
     @objid ("8e83bd89-9266-4bb6-a84f-11ea55ce94ed")
     public void turnOn() 
     {
-    	winchMotor.set(0.0);
+    	winchMotor.set(0.85);
     }
 
     @objid ("93882f5d-5d77-43a5-81a7-07515550eaf6")
@@ -25,6 +28,11 @@ public class Climber extends Subsystem
     	winchMotor.set(0.0);
     }
 
+    public TurnOffClimberCommand getDefaultClimberCommand()
+    {
+    	return climberOff;
+    }
+    
     /*@objid ("353bc7be-0076-4b3a-afbc-c8771233e264")
     public boolean isAtTouchpad() 
     {
@@ -37,17 +45,19 @@ public class Climber extends Subsystem
     @Override
     protected void initDefaultCommand() 
     {
-        // TODO Auto-generated method stub
+        climberOff = new TurnOffClimberCommand(this);
+        setDefaultCommand(climberOff);
     }
 
     @objid ("f4e055f9-36cc-43d2-98f4-640805a1ab15")
-    public Climber(int climberCanID) 
+    public Climber() 
     {
-    	winchMotor = new CANTalon(climberCanID);
+    	winchMotor = new CANTalon(Parameters.CanId.CLIMBER_MOTOR.getId());
     	winchMotor.changeControlMode(TalonControlMode.PercentVbus);
     	winchMotor.enableBrakeMode(true);
-    	winchMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-    	winchMotor.configEncoderCodesPerRev(1024);
+//    	winchMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+//    	winchMotor.configEncoderCodesPerRev(1024);
     	winchMotor.enable();
+    	getDefaultCommand();
     }
 }

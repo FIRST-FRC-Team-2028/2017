@@ -87,7 +87,7 @@ public class PixyCamera extends Subsystem {
 					System.out.println(s[0]);
 					System.out.println(s[1]);
 //					System.out.println("End: "+str[3]);
-					str[3].substring(0, str[3].length()-2);
+//					str[3].substring(0, str[3].length()-2);
 //					System.out.println("End: "+str[3]);
 
 					str2[3].replace("$", "");

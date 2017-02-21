@@ -4,12 +4,9 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
-import com.phantommentalists.steamworks.Parameters.CanId;
-import com.phantommentalists.steamworks.Parameters.Pid;
-import com.phantommentalists.steamworks.Parameters.PneumaticChannel;
+import com.phantommentalists.steamworks.command.TurnOffShooterCommand;
 
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -48,29 +45,33 @@ public class Shooter extends Subsystem {
 	/** notifies commands if loading  */
 	protected boolean amILoading = false;
 	
+	protected double p = 0, i= 0,d =0;
+	
+	private TurnOffShooterCommand shooterOff;
+	
     /**
      * Constructor.  This method is responsible for initializing a new Shooter instance.
      */
     @objid ("732b1b92-b601-477c-ab75-004c7e1b6814")
-    public Shooter(CanId wheelCanId, CanId conveyorCanId, PneumaticChannel openSolenoid, PneumaticChannel closeSolenoid, Pid shooterWheelPid) {
-    	wheelMotor = new CANTalon(wheelCanId.getId());
-    	wheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+    public Shooter() {
+    	wheelMotor = new CANTalon(Parameters.CanId.SHOOTER_WHEEL.getId());
+    	wheelMotor.changeControlMode(TalonControlMode.PercentVbus);
+//    	wheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+//    	wheelMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     	wheelMotor.enableBrakeMode(true);
-    	wheelMotor.setF(shooterWheelPid.getF());
-    	wheelMotor.setP(shooterWheelPid.getP());
-    	wheelMotor.setI(shooterWheelPid.getI());
-    	wheelMotor.setD(shooterWheelPid.getD());
-    	wheelMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    	conveyorMotor = new CANTalon(conveyorCanId.getId());
+//    	wheelMotor.setP(p);
+//    	wheelMotor.setI(i);
+//    	wheelMotor.setD(d);
+    	conveyorMotor = new CANTalon(Parameters.CanId.SHOOTER_CONVEYOR.getId());
     	conveyorMotor.enableBrakeMode(true);
     	conveyorMotor.changeControlMode(TalonControlMode.PercentVbus);
-    	gateOpenSolenoid = new Solenoid(openSolenoid.getChannel());
-    	
-    	gateCloseSolenoid = new Solenoid(closeSolenoid.getChannel());
+    	gateOpenSolenoid = new Solenoid(Parameters.PneumaticChannel.SHOOTER_GATE_OPEN.getChannel());
+    	gateCloseSolenoid = new Solenoid(Parameters.PneumaticChannel.SHOOTER_GATE_CLOSE.getChannel());
     	
     	wheelMotor.enable();
     	
     	conveyorMotor.enable();
+    	getDefaultCommand();
     }
    
     /*
@@ -97,7 +98,7 @@ public class Shooter extends Subsystem {
     @objid ("68e94877-afe1-4880-9814-1f35bbd1f035")
     public void turnOnWheelToShoot() 
     {
-    	wheelMotor.set(Parameters.SHOOTER_WHEEL_SHOOT_SPEED);
+    	wheelMotor.set(Parameters.SHOOTER_WHEEL_SHOOT_SETPOINT);
     	amIShooting = true;
     	amIOff=false;
     	amILoading=false;
@@ -109,7 +110,7 @@ public class Shooter extends Subsystem {
     @objid ("68e94877-afe1-4880-9814-1f35bbd1f035")
     public void turnOnWheelToLoad() 
     {
-    	wheelMotor.set(Parameters.SHOOTER_WHEEL_LOAD_SPEED);
+    	wheelMotor.set(Parameters.SHOOTER_WHEEL_LOAD_SETPOINT);
     	amIShooting = false;
     	amIOff=false;
     	amILoading=true;
@@ -213,7 +214,13 @@ public class Shooter extends Subsystem {
      */
 	@Override
 	protected void initDefaultCommand() {
-		// This method intentionally left blank
+		shooterOff = new TurnOffShooterCommand(this);
+		setDefaultCommand(shooterOff);
 		
+	}
+	
+	public TurnOffShooterCommand getDefaultShooterCommand()
+	{
+		return shooterOff;
 	}
 }

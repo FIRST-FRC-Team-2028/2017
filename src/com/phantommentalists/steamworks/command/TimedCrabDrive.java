@@ -29,7 +29,7 @@ public class TimedCrabDrive extends Command{
 	@Override
 	protected void end()
 	{
-		drivetrain.crabDrive(0.0, 0.0);
+		drivetrain.crabDrive(angle, 0.0);
 	}
 	
 	@Override

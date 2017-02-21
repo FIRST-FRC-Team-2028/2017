@@ -14,7 +14,7 @@ public class DriveCommand extends Command {
 
 	Drivetrain drive;
 	
-	static double angle= 0, speed=0, swerveangle =0;
+	static double angle= 0, speed=0, swerveangle =0, swervespeed =0;
 	
 	static DriveType drivetype = DriveType.CRAB;
 	
@@ -41,6 +41,7 @@ public class DriveCommand extends Command {
     	double[] polar = getPolarCoords(x,y);
     	angle = polar[0];
     	speed = polar[1];
+    	swervespeed = y;
 //    	System.out.println("Swerve "+swerveangle);
     	swerveangle = z;
     }
@@ -73,10 +74,11 @@ public class DriveCommand extends Command {
     	switch(drivetype)
     	{
     	case CRAB:
+//    		System.out.println(angle);
     		drive.crabDrive(angle, speed);
     		break;
     	case SWERVE:
-    		drive.swerveDrive(swerveangle, speed);
+    		drive.swerveDrive(swerveangle, swervespeed);
     		break;
     	case SPIN:
     		drive.spinOnAxis(swerveangle);

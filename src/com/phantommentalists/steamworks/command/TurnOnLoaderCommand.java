@@ -26,6 +26,7 @@ public class TurnOnLoaderCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        return shooter.isShooterUpToSpeed();
+    	return true;
+//        return shooter.isShooterUpToSpeed();
     }
 }

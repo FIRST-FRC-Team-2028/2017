@@ -10,18 +10,22 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class GearGobbler extends Subsystem 
 {
     @objid ("864a1060-eb54-405b-9237-9e9e8995a6a6")
-    private Solenoid solenoid;
+    private Solenoid openSolenoid;
+    
+    private Solenoid closeSolenoid;
 
     @objid ("3328d132-187e-4cc6-9d63-ce44b0ea9735")
     public void openFlap() 
     {
-    	solenoid.set(true);
+    	openSolenoid.set(true);
+    	closeSolenoid.set(false);
     }
 
     @objid ("6f534bc0-46ef-46f3-8a16-d55f5ffa98f2")
     public void closeFlap() 
     {
-    	solenoid.set(false);
+    	openSolenoid.set(false);
+    	closeSolenoid.set(true);
     }
 
     @objid ("606b5fbd-c3bf-4891-8766-319edb78bea8")
@@ -35,6 +39,7 @@ public class GearGobbler extends Subsystem
 
     public GearGobbler() 
     {
-    	solenoid = new Solenoid(Parameters.PneumaticChannel.GEAR_GOBBLER_FLAP.getChannel());
+    	openSolenoid = new Solenoid(Parameters.PneumaticChannel.GEAR_GOBBLER_FLAP_OPEN.getChannel());
+    	closeSolenoid = new Solenoid(Parameters.PneumaticChannel.GEAR_GOBBLER_FLAP_CLOSE.getChannel());
     }
 }

@@ -23,13 +23,16 @@ public class TurnOffShooterCommand extends Command {
     @Override
     protected void execute() 
     {
+//    	System.out.println("shooter off");
     	shooter.turnOffShooterWheel();
+    	shooter.turnOffConveyor();
     }
 
     
     /**  determines if this code should stop  */
     @Override
     protected boolean isFinished() {
-        return shooter.isShooterOff();
+    	return true;
+//        return shooter.isShooterOff();
     }
 }

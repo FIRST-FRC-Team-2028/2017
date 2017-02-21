@@ -25,14 +25,16 @@ public class TurnOnShooterCommand extends Command {
     @Override
     protected void execute()
     {
-    	shooter.turnOnWheelToShoot();
+//    	System.out.println("shooter on");
     	shooter.setShooterGatePosition();
+    	shooter.turnOnWheelToShoot();
     	shooter.turnOnConveyor();
     }
 
     /** tells running till command is retired   */
     @Override
     protected boolean isFinished() {
-        return shooter.isShooterUpToSpeed();
+    	return true;
+//        return shooter.isShooterUpToSpeed();
     }
 }

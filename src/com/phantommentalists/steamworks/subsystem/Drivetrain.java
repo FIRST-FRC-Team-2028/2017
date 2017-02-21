@@ -28,7 +28,7 @@ public class Drivetrain extends Subsystem {
     	rightSide = new DriveSide(Parameters.SideOfRobot.RIGHT);
     	
     	lowGear = new Solenoid(Parameters.PneumaticChannel.DRIVE_LOW_GEAR.getChannel());
-    	highGear = new Solenoid(Parameters.PneumaticChannel.DRIVE_RIGHT_GEAR.getChannel());
+    	highGear = new Solenoid(Parameters.PneumaticChannel.DRIVE_HIGH_GEAR.getChannel());
     	
     	highGear.set(false);
     	lowGear.set(true);

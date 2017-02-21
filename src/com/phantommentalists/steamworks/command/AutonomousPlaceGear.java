@@ -2,6 +2,7 @@ package com.phantommentalists.steamworks.command;
 
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 import com.phantommentalists.steamworks.subsystem.PixyCamera;
+import com.phantommentalists.steamworks.subsystem.Ultrasonic;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -12,39 +13,45 @@ public class AutonomousPlaceGear extends CommandGroup {
 	
 	PixyCamera pixy;
 	Drivetrain drive;
+	Ultrasonic ultrasonic;
 	
-	public AutonomousPlaceGear(PixyCamera pixy, Drivetrain drive) {
+	public AutonomousPlaceGear(PixyCamera pixy, Drivetrain drive, Ultrasonic ultrasonic) {
 		this.pixy = pixy;
 		this.drive = drive;
+		this.ultrasonic = ultrasonic;
 		requires(pixy);
 		requires(drive);
+		requires(ultrasonic);
 	}
     protected void execute() {
 //    	System.out.println("Finding");
     	pixy.getTargets();
-    	if(!pixy.isCloseEnough() && pixy.hasTarget())
+    	if(pixy.hasTarget())
     	{
-    		drive.swerveDrive(-pixy.getTargetAngle(), 0.25);
-    		done = false;
-    		num = 0;
-    	} 
-    	else
-    	{
-    		if(pixy.hasTarget())
+    		System.out.println("found target");
+    		if(ultrasonic.getDistance() > 12)
     		{
-    			drive.swerveDrive(0, 0);
-    			done = true;
+	    		drive.swerveDrive(pixy.getTargetAngle(), -0.25);
+	    		done = false;
+	    		num = 0;
     		}
     		else
     		{
-    			num++;
-    			if(num >= 20)
-    			{
-    				System.out.println("Canceled");
-    		    	drive.swerveDrive(0, 0);
-    				cancel();
-    			}
+    			System.out.println("Done at: "+ultrasonic.getDistance());
+    			drive.swerveDrive(0, 0);
+    			done = true;
     		}
+    	} 
+    	else
+    	{
+			num++;
+			if(num >= 100)
+			{
+				System.out.println("Canceled");
+		    	drive.swerveDrive(0, 0);
+		    	done =true;
+//				cancel();
+			}
     	}
     }
 
@@ -61,7 +68,7 @@ public class AutonomousPlaceGear extends CommandGroup {
     }
     
     protected void initialize() {
-//    	System.out.println("");
+    	System.out.println("Starting");
     	done = false;
     	num = 0;
     }
