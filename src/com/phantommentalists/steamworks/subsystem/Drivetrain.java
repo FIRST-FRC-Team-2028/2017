@@ -120,13 +120,19 @@ public class Drivetrain extends Subsystem {
 		if(angle > 0)
 		{
 //			System.out.println("here");
-			leftSide.swerveDrive(in, speed);
-			rightSide.swerveDrive(out, speed);
+			leftSide.swerveDrive(out, speed);
+			if(angle >0.25)
+				rightSide.swerveDrive(in, speed*0.3);
+			else
+				rightSide.swerveDrive(in, speed);
 		}
 		else
 		{
-			leftSide.swerveDrive(out, speed);
-			rightSide.swerveDrive(in, speed);
+			if(angle < -0.25)
+				leftSide.swerveDrive(in, speed*0.3);
+			else
+				leftSide.swerveDrive(in, speed);
+			rightSide.swerveDrive(out, speed);
 		}
     }
     

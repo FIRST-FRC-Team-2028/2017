@@ -6,6 +6,7 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
 import com.phantommentalists.steamworks.command.TurnOffClimberCommand;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 @objid ("7f4cd058-1d2d-4a6d-9a50-a3ac0c4836b4")
@@ -13,6 +14,10 @@ public class Climber extends Subsystem
 {
 	@objid ("25dc6539-fcd9-48bd-8998-b7361199f269")
     private CANTalon winchMotor;
+	
+	private DigitalInput limitSwitchLeft;
+	
+	private DigitalInput limitSwitchRight;
 	
 	private TurnOffClimberCommand climberOff;
 
@@ -59,5 +64,17 @@ public class Climber extends Subsystem
 //    	winchMotor.configEncoderCodesPerRev(1024);
     	winchMotor.enable();
     	getDefaultCommand();
+    	limitSwitchLeft = new DigitalInput(Parameters.DigitalInput.LIMIT_SWITCH_LEFT.getChannel());
+    	limitSwitchRight = new DigitalInput(Parameters.DigitalInput.LIMIT_SWITCH_RIGHT.getChannel());
+
+    }
+    
+    public boolean getLeftLimitSwitch()
+    {
+    	return limitSwitchLeft.get();
+    }
+    public boolean getRightLimitSwitch()
+    {
+    	return limitSwitchRight.get();
     }
 }

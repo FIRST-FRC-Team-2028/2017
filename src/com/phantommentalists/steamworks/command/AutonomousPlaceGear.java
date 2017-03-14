@@ -29,9 +29,9 @@ public class AutonomousPlaceGear extends CommandGroup {
     	if(pixy.hasTarget())
     	{
     		System.out.println("found target");
-    		if(ultrasonic.getDistance() > 12)
+    		if(ultrasonic.getDistance() > 14)
     		{
-	    		drive.swerveDrive(pixy.getTargetAngle(), -0.25);
+	    		drive.swerveDrive(-pixy.getTargetAngle(), -0.25);
 	    		done = false;
 	    		num = 0;
     		}

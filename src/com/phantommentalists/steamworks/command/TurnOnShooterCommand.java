@@ -4,6 +4,7 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.subsystem.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 @objid ("ea30a50c-4f2d-4553-b07f-73af66a1c537")
 public class TurnOnShooterCommand extends Command {
@@ -26,7 +27,8 @@ public class TurnOnShooterCommand extends Command {
     protected void execute()
     {
 //    	System.out.println("shooter on");
-    	shooter.setShooterGatePosition();
+//    	shooter.setShooterGatePosition();
+//    	System.out.println("Speed: "+shooter.getSpeed());
     	shooter.turnOnWheelToShoot();
     	shooter.turnOnConveyor();
     }

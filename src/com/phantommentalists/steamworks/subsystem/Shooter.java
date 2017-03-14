@@ -1,6 +1,7 @@
 package com.phantommentalists.steamworks.subsystem;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
@@ -8,6 +9,7 @@ import com.phantommentalists.steamworks.command.TurnOffShooterCommand;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for robot's shooter.
@@ -45,7 +47,7 @@ public class Shooter extends Subsystem {
 	/** notifies commands if loading  */
 	protected boolean amILoading = false;
 	
-	protected double p = 0, i= 0,d =0;
+	protected double p = .005, i= 0.00000005,d =0.00000005;
 	
 	private TurnOffShooterCommand shooterOff;
 	
@@ -57,7 +59,8 @@ public class Shooter extends Subsystem {
     	wheelMotor = new CANTalon(Parameters.CanId.SHOOTER_WHEEL.getId());
     	wheelMotor.changeControlMode(TalonControlMode.PercentVbus);
 //    	wheelMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
-//    	wheelMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	wheelMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+    	wheelMotor.configEncoderCodesPerRev(4096);
     	wheelMotor.enableBrakeMode(true);
 //    	wheelMotor.setP(p);
 //    	wheelMotor.setI(i);
@@ -74,6 +77,29 @@ public class Shooter extends Subsystem {
     	getDefaultCommand();
     }
    
+    public double getP()
+    {
+    	return p;
+    }
+    
+    public double getI()
+    {
+    	return i;
+    }
+    
+    public double getD()
+    {
+    	return d;
+    }
+    
+    public void setPID(double p, double i, double d)
+    {
+    	this.p = p;
+    	this.i = i;
+    	this.d = d;
+    	wheelMotor.setPID(p, i, d);
+    }
+    
     /*
      * This method will turn on the conveyor belt.
      */
@@ -81,6 +107,11 @@ public class Shooter extends Subsystem {
     public void turnOnConveyor() 
     {
     	conveyorMotor.set(Parameters.CONVEYOR_SPEED);
+    }
+    
+    public void turnOnConveyorReverse()
+    {
+    	conveyorMotor.set(-Parameters.CONVEYOR_SPEED);
     }
 
     /*
@@ -98,6 +129,8 @@ public class Shooter extends Subsystem {
     @objid ("68e94877-afe1-4880-9814-1f35bbd1f035")
     public void turnOnWheelToShoot() 
     {
+    	SmartDashboard.putNumber("Current",wheelMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Speed", wheelMotor.getSpeed());
     	wheelMotor.set(Parameters.SHOOTER_WHEEL_SHOOT_SETPOINT);
     	amIShooting = true;
     	amIOff=false;
@@ -188,6 +221,12 @@ public class Shooter extends Subsystem {
     	}
     	
     	return closeEnough;
+    }
+    
+    public double getSpeed()
+    {
+    	return wheelMotor.get();
+//    	wheelMotor.get
     }
     
     /**

@@ -29,9 +29,9 @@ public class Parameters {
 	// TODO - Replace with actual values
 	public final static double SHOOTER_WHEEL_SHOOT_SPEED_CLOSE_ENOUGH = 0.1;
 		
-	public final static double SHOOTER_WHEEL_LOAD_SETPOINT = -0.1;
-	public final static double SHOOTER_WHEEL_SHOOT_SETPOINT = -0.37;
-	public final static double CONVEYOR_SPEED = 0.45;
+	public final static double SHOOTER_WHEEL_LOAD_SETPOINT = -0.13;
+	public final static double SHOOTER_WHEEL_SHOOT_SETPOINT = -0.45;//-0.43 -6300 rpms
+	public final static double CONVEYOR_SPEED = 0.85;
 	
 	public final static double GEAR_GOBBLER_CLOSE_TIME =0;
 	public final static double GEAR_GOBBLER_OPEN_TIME =5;
@@ -77,10 +77,10 @@ public class Parameters {
 
     @objid ("9ad1c688-70b9-44a6-9d6d-9f13129086ec")
     public enum SteeringOffset {
-        LEFT_FRONT (0.08),//10 (-0.42)
-        RIGHT_FRONT (0.23),//20 (-.27)
+        LEFT_FRONT (0.05),//10 (-0.42)
+        RIGHT_FRONT (0.24),//20 (-.27)
         RIGHT_REAR (0.29),//30 (-.21)
-        LEFT_REAR (0.495);//40 (.005)
+        LEFT_REAR (0.11);//40 (.005)
 
         @objid ("18ad7371-c09e-43bd-a188-c5e708656a77")
         private double offset;
@@ -127,8 +127,8 @@ public class Parameters {
     public enum PneumaticChannel {
     	SHOOTER_GATE_OPEN(2),
     	SHOOTER_GATE_CLOSE(3),
-    	GEAR_GOBBLER_FLAP_OPEN(4),
-    	GEAR_GOBBLER_FLAP_CLOSE(5),
+    	GEAR_GOBBLER_FLAP_OPEN(5),
+    	GEAR_GOBBLER_FLAP_CLOSE(4),
     	DRIVE_LOW_GEAR(0),
     	DRIVE_HIGH_GEAR(1);
 //    	OPEN_LOADER_WHEEL_HOLDER(7),
@@ -145,6 +145,23 @@ public class Parameters {
         {
         	return channel;
         }
+    }
+    
+    public enum DigitalInput {
+    	LIMIT_SWITCH_LEFT(0),
+    	LIMIT_SWITCH_RIGHT(1);
+    	
+    	private int input;
+    	
+    	private DigitalInput(int input)
+    	{
+    		this.input = input;
+    	}
+    	
+    	public int getChannel()
+    	{
+    		return input;
+    	}
     }
     
     public enum Pid {
@@ -190,6 +207,7 @@ public class Parameters {
     	}
     }
 
+    
 
     public static int pixyResx = 320; //Could be 320 or 640 
     public static int pixyResy = 200; //Could be 200 or 400

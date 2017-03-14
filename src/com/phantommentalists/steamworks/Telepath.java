@@ -1,10 +1,15 @@
 package com.phantommentalists.steamworks;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.command.AutoClimb;
 import com.phantommentalists.steamworks.command.AutonomousCenterPeg;
 import com.phantommentalists.steamworks.command.AutonomousDriveAcrossBaseline;
 import com.phantommentalists.steamworks.command.AutonomousPlaceGear;
+import com.phantommentalists.steamworks.command.CloseGearGobblerCommand;
 import com.phantommentalists.steamworks.command.DriveCommand;
+import com.phantommentalists.steamworks.command.DriveToBoilerDistanceCommand;
+import com.phantommentalists.steamworks.command.OpenGearGobblerCommand;
+import com.phantommentalists.steamworks.command.ShootGateCommand;
 import com.phantommentalists.steamworks.command.TurnOffClimberCommand;
 import com.phantommentalists.steamworks.command.TurnOffShooterCommand;
 import com.phantommentalists.steamworks.command.TurnOnClimberCommand;
@@ -17,8 +22,6 @@ import com.phantommentalists.steamworks.subsystem.PixyCamera;
 import com.phantommentalists.steamworks.subsystem.Shooter;
 import com.phantommentalists.steamworks.subsystem.Ultrasonic;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 //github.com/FIRST-FRC-Team-2028/2017.git
@@ -27,6 +30,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 @objid ("595898a6-dbcb-4cef-ba25-a6e7f7e35190")
 public class Telepath extends IterativeRobot {
@@ -60,13 +64,22 @@ public class Telepath extends IterativeRobot {
     private SendableChooser<CommandGroup> autoChooser;
     
     private AutonomousPlaceGear autoPlaceGear;
+    private AutoClimb autoClimb;
+    private DriveToBoilerDistanceCommand driveToBoiler;
     
     private TurnOnClimberCommand climberOn;
     private TurnOffClimberCommand climberOff;
     
     private TurnOnShooterCommand shooterOn;
+    private ShootGateCommand setGateShoot;
+//    private SetShooterShoot setShooter;
     private TurnOnLoaderCommand shooterLoad;
     private TurnOffShooterCommand shooterOff;
+    
+    private OpenGearGobblerCommand openGear;
+    private CloseGearGobblerCommand closeGear;
+    
+    int num =0;
 
     @Override
     @objid ("0b53ecde-257f-466b-bcef-43fce4dbdc95")
@@ -90,20 +103,32 @@ public class Telepath extends IterativeRobot {
 //    	crabCommand = (CrabDriveCommand)drivetrain.
     	pixyCamera = new PixyCamera();
     	
+    	SmartDashboard.putNumber("P", shooter.getP());
+    	SmartDashboard.putNumber("I",shooter.getI());
+    	SmartDashboard.putNumber("D", shooter.getD());
     	
 
     	autoPlaceGear = new AutonomousPlaceGear(pixyCamera, drivetrain, ultrasonic);
+    	autoClimb = new AutoClimb(climber);
+    	driveToBoiler = new DriveToBoilerDistanceCommand(drivetrain, ultrasonic);
+    	
     	
     	climberOn = new TurnOnClimberCommand(climber);
     	climberOff = climber.getDefaultClimberCommand();
     	
     	shooterOn = new TurnOnShooterCommand(shooter);
+    	setGateShoot = new ShootGateCommand(shooter);
+//    	setShooter = new SetShooterShoot(shooter);
     	shooterLoad = new TurnOnLoaderCommand(shooter);
     	shooterOff = shooter.getDefaultShooterCommand();
     	
     	autoChooser = new SendableChooser<CommandGroup>();
     	autoChooser.addDefault("Baseline",new AutonomousDriveAcrossBaseline(drivetrain));
     	autoChooser.addObject("Center Peg", new AutonomousCenterPeg(drivetrain,gearGobbler,pixyCamera,ultrasonic,false));
+    
+    	openGear = new OpenGearGobblerCommand(gearGobbler);
+    	closeGear = new CloseGearGobblerCommand(gearGobbler);
+    	
 //    	autoChooser.initTable(table);
     	//    	auto = new AutonomousDriveAcrossBaseline(drivetrain);
 //    	auto = new AutonomousCenterPeg(drivetrain,gearGobbler,pixyCamera,ultrasonic,false);
@@ -130,6 +155,11 @@ public class Telepath extends IterativeRobot {
     public void teleopInit() {
     	System.out.println("Tele init");
     	drivetrain.enableTurning(true);
+    	double p=0,i=0,d=0;
+    	p = SmartDashboard.getNumber("P", shooter.getP());
+    	i = SmartDashboard.getNumber("I",shooter.getI());
+    	d = SmartDashboard.getNumber("D", shooter.getD());
+    	shooter.setPID(p, i, d);
     	comp.start();
     }
 
@@ -177,35 +207,123 @@ public class Telepath extends IterativeRobot {
     	{
     		autoPlaceGear.cancel();
     	}
+    	if (onestick.getRawButton(10))
+    	{
+    		driveToBoiler.start();
+    	}
+    	if (onestick.getRawButton(9))
+    	{
+    		driveToBoiler.cancel(); 
+    	}
     	
-    	if(buttonstick.getRawButton(1))
+    	if(buttonstick.getRawButton(3))
     	{
     		climberOn.start();
     	}
-    	if(buttonstick.getRawButton(2))
+    	else
     	{
-    		shooterOn.start();
+    		climberOn.cancel();
     	}
-    	if(buttonstick.getRawButton(3))
+    	
+    	if(buttonstick.getRawButton(5))
     	{
+    		openGear.start();
+    	}	
+    	else
+    	{
+    		closeGear.start();
+    	}
+//    	if(buttonstick.getRawButton(2))
+//    	{
+////    		if(num ==0)
+////    		{
+////    			setGateShoot.start();
+////    		}
+////    		else
+////    		{
+//    			shooterOn.start();
+////    		}
+////    		setShooter.start();
+//    		num++;
+//    		if(num%10 ==0)
+//    		{
+//    			SmartDashboard.putNumber("Speed", shooter.getSpeed());
+//    		}
+//
+//    	}
+//    	else
+//    	{
+//    		num = 0;
+//    	}
+    	switch(getShootingState())
+    	{
+    	case -1:
     		shooterLoad.start();
+    		break;
+    	case 0:
+    		shooterLoad.cancel();
+    		shooterOff.start();
+    		break;
+    	case 1:
+    		shooterOn.start();
+    		break;
+    	default:
     	}
-    	if(buttonstick.getRawButton(10))
+    	if(buttonstick.getRawButton(6))
     	{
-    		shooter.setShooterGatePosition();
+    		setGateShoot.start();
     	}
-    	if (buttonstick.getRawButton(9))
+    	else
     	{
-    		shooter.setLoaderGatePosition();
+    		setGateShoot.cancel();
     	}
-    	if (buttonstick.getRawButton(8))
+    	
+    	if (buttonstick.getRawButton(2))
     	{
-    		gearGobbler.openFlap();
+    		autoClimb.start();
     	}
-    	if (buttonstick.getRawButton(7))
+    	else
     	{
-    		gearGobbler.closeFlap();
+    		autoClimb.cancel();
     	}
+//		if(buttonstick.getRawAxis(num) == -1)
+//    	{
+//    		//auto cross base line code
+//    	}
+//    	else if(buttonstick.getRawAxis(num) == -0.8)
+//    	{
+//    		//auto left gear code
+//    	}
+//    	else if(buttonstick.getRawAxis(num) == -0.6)
+//    	{
+//    		//auto center left gear code
+//    	}
+//    	else if(buttonstick.getRawAxis(num) == -0.4)
+//    	{
+//    		//auto center right gear code
+//    	}
+//    	else if(buttonstick.getRawAxis(num) == -0.2)
+//    	{
+//    		//auto right gear code
+//    	}
+//    	else if(buttonstick.getRawAxis(num) == 0)
+//    	{
+//    		//    Nothing
+//    	}
+//    	else if(buttonstick.getRawAxis(num) == 0.2)
+//    	{
+//    		//auto Shoot Left/Blue or Red
+//    	}
+//    	else if(buttonstick.getRawAxis(num) == 0.4)
+//    	{
+//    		//auto Shoot Right/Blue or Red
+//    	}
+
+    	
+    	SmartDashboard.putBoolean("Limit Switch Left: ", climber.getLeftLimitSwitch());
+    	SmartDashboard.putBoolean("Limit Switch Right: ", climber.getRightLimitSwitch());
+
+
     }
 
 //    @Override
@@ -231,7 +349,7 @@ public class Telepath extends IterativeRobot {
     @Override
     public void testInit()
     {
-//    	drivetrain.enableTurning(false);
+    	drivetrain.enableTurning(false); 
     }
     
     @Override
@@ -240,17 +358,35 @@ public class Telepath extends IterativeRobot {
     	Scheduler.getInstance().run();
     	drivetrain.printNeededOffsets();
     	
-    	if(onestick.getRawButton(1))
-    	{
-    		autoPlaceGear.start();
-    	}
-    	else if(onestick.getRawButton(3))
-    	{
-    		autoPlaceGear.cancel();
-    	}
+//    	if(onestick.getRawButton(1))
+//    	{
+//    		autoPlaceGear.start();
+//    	}
+//    	else if(onestick.getRawButton(3))
+//    	{
+//    		autoPlaceGear.cancel();
+//    	}
     		
     	
 //    	System.out.println("Distance: "+ultrasonic.getDistance());
+    }
+    
+    public int getShootingState()
+    {
+    	double y = buttonstick.getRawAxis(1);
+//    	System.out.println(y);
+    	if(y <= 0.1)
+    	{
+    		return -1;
+    	}
+    	else if(y >= 0.5)
+    	{
+    		return 1;
+    	}
+    	else
+    	{
+    		return 0;
+    	}
     }
     
     @objid ("aed20313-389b-4a3c-b333-d763e6cd1572")

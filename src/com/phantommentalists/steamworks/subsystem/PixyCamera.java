@@ -19,9 +19,14 @@ public class PixyCamera extends Subsystem {
     int num = 0;
     
     public PixyCamera() {
+    	try{
     	serialPort = new SerialPort(19200, Port.kUSB1);
     	serialPort.setWriteBufferMode(WriteBufferMode.kFlushOnAccess);
     	serialPort.writeString("init\n");
+    	} catch(Exception e)
+    	{
+    		e.printStackTrace();
+    	}
     }
 
     public int getFuelCount() {
@@ -116,6 +121,7 @@ public class PixyCamera extends Subsystem {
 		}
 		}catch(Exception e)
 		{
+	    	serialPort = new SerialPort(19200, Port.kUSB1);
 			e.printStackTrace();
 //			System.out.println("Exception trying to get serial bytes: "+e.getMessage());
 		}
