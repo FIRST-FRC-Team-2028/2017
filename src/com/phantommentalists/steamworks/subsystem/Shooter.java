@@ -31,6 +31,9 @@ public class Shooter extends Subsystem {
     /**   can id of wheel motor  */
     @objid ("39f50a55-9553-4bf4-8026-d40058cb7a83")
     private CANTalon conveyorMotor;
+    
+    /**							*/
+    private CANTalon augerMotor;
 
     /**   solinoid variable for gate*/
     private Solenoid gateOpenSolenoid;
@@ -50,7 +53,8 @@ public class Shooter extends Subsystem {
 	protected double p = .005, i= 0.00000005,d =0.00000005;
 	
 	private TurnOffShooterCommand shooterOff;
-	
+
+	private boolean gateLoad = false;
     /**
      * Constructor.  This method is responsible for initializing a new Shooter instance.
      */
@@ -68,12 +72,17 @@ public class Shooter extends Subsystem {
     	conveyorMotor = new CANTalon(Parameters.CanId.SHOOTER_CONVEYOR.getId());
     	conveyorMotor.enableBrakeMode(true);
     	conveyorMotor.changeControlMode(TalonControlMode.PercentVbus);
+    	augerMotor = new CANTalon(Parameters.CanId.SHOOTER_AUGER.getId());
+    	augerMotor.enableBrakeMode(true);
+    	augerMotor.changeControlMode(TalonControlMode.PercentVbus);
     	gateOpenSolenoid = new Solenoid(Parameters.PneumaticChannel.SHOOTER_GATE_OPEN.getChannel());
     	gateCloseSolenoid = new Solenoid(Parameters.PneumaticChannel.SHOOTER_GATE_CLOSE.getChannel());
     	
     	wheelMotor.enable();
     	
     	conveyorMotor.enable();
+    	
+    	augerMotor.enable();
     	getDefaultCommand();
     }
    
@@ -99,7 +108,16 @@ public class Shooter extends Subsystem {
     	this.d = d;
     	wheelMotor.setPID(p, i, d);
     }
+    // auger code by Ricky if it messes up it's Moose's code.
+    public void turnOnAuger()
+    {
+    	augerMotor.set(Parameters.AUGER_ON_VOLTAGE);
+    }
     
+    public void turnOffAuger()
+    {
+    	augerMotor.set(0.0);
+    }
     /*
      * This method will turn on the conveyor belt.
      */
@@ -120,7 +138,7 @@ public class Shooter extends Subsystem {
     @objid ("e600c4f6-8c96-4d44-a8ac-86765608dc1d")
     public void turnOffConveyor() 
     {
-    	conveyorMotor.set(0);
+    	conveyorMotor.set(0.0);
     }
 
     /*
@@ -169,6 +187,7 @@ public class Shooter extends Subsystem {
     {
     	gateOpenSolenoid.set(true);
     	gateCloseSolenoid.set(false);
+    	gateLoad = false;
     }
 
     /**
@@ -179,6 +198,7 @@ public class Shooter extends Subsystem {
     {
     	gateOpenSolenoid.set(false);
     	gateCloseSolenoid.set(true);
+    	gateLoad = true;
     }
 
     /**
@@ -227,6 +247,11 @@ public class Shooter extends Subsystem {
     {
     	return wheelMotor.get();
 //    	wheelMotor.get
+    }
+    
+    public boolean isGateInLoadPosition()
+    {
+    	return gateLoad;
     }
     
     /**

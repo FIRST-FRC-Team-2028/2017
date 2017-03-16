@@ -4,8 +4,17 @@ import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("147601fc-4964-44fd-9205-76f83e66cb5d")
 public class Parameters {
+	public final static double STEERING_MOTOR_SPEED = 0.25;
+	
+	public final static double CLIMBER_ON_CLIMB_VOLTAGE = 0.85;
+	
+	public final static double DRIVE_FAN_SET = 0.625;
+	
+	public final static double AUGER_ON_VOLTAGE = 0.5;
 	
 	public final static double FAN_MAX_VOLTAGE = 7.5;
+	
+	public final static double AUTONOMOUS_CLIMB_TIME = 0.1;
 	
 	public final static double AUTONOMOUS_DRIVE_ACROSS_BASELINE_TIME = 3;
 	
@@ -35,6 +44,8 @@ public class Parameters {
 	
 	public final static double GEAR_GOBBLER_CLOSE_TIME =0;
 	public final static double GEAR_GOBBLER_OPEN_TIME =5;
+
+	public static final int ULTRASONIC_PORT = 0;
 	
     @objid ("53c209e9-b5d2-4210-a4ad-4673956bef36")
     public enum CanId {
@@ -48,6 +59,7 @@ public class Parameters {
         STEERING_RIGHT_REAR (30, false),
         SHOOTER_WHEEL (52, false),
         SHOOTER_CONVEYOR (51, false),
+        SHOOTER_AUGER (60, false),
         CLIMBER_MOTOR (50, false),
     	FAN(53, false);
 

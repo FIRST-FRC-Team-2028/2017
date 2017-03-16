@@ -4,6 +4,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
+import com.phantommentalists.steamworks.Parameters;
 import com.phantommentalists.steamworks.Parameters.CanId;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -159,7 +160,7 @@ public class Wheel {
 			steeringMotor.disable();
 			steeringMotor.changeControlMode(TalonControlMode.Voltage);
 			steeringMotor.enable();
-			steeringMotor.set(0.25);
+			steeringMotor.set(Parameters.STEERING_MOTOR_SPEED);
 //			steeringMotor.disableControl();
 //			steeringMotor.disable();
 		}

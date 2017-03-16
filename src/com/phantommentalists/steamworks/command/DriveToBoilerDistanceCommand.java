@@ -19,9 +19,10 @@ public class DriveToBoilerDistanceCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
-
+  
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run

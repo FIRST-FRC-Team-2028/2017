@@ -56,7 +56,7 @@ public class Drivetrain extends Subsystem {
     	if (! driveUsed)
     	{
     		driveUsed = true;
-    		fan.set(0.625);
+    		fan.set(Parameters.DRIVE_FAN_SET);
     	}
 //    	System.out.println("crab "+angle);
 //    	angle += 0.5;
@@ -106,7 +106,7 @@ public class Drivetrain extends Subsystem {
     	if (! driveUsed)
     	{
     		driveUsed = true;
-    		fan.set(0.625);
+    		fan.set(Parameters.DRIVE_FAN_SET);
     	}
     	
 //    	angle*=0.125;
@@ -141,7 +141,7 @@ public class Drivetrain extends Subsystem {
     	if (! driveUsed)
     	{
     		driveUsed = true;
-    		fan.set(0.625);
+    		fan.set(Parameters.DRIVE_FAN_SET);
     	}
     	leftSide.spinOnAxis(speed);
     	rightSide.spinOnAxis(speed);

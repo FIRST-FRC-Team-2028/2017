@@ -1,5 +1,7 @@
 package com.phantommentalists.steamworks.subsystem;
 
+import com.phantommentalists.steamworks.Parameters;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,7 +14,7 @@ public class Ultrasonic extends Subsystem {
 	AnalogInput sensor;
 	public Ultrasonic()
 	{
-		sensor = new AnalogInput(0);
+		sensor = new AnalogInput(Parameters.ULTRASONIC_PORT);
 	}
 	
     public void initDefaultCommand() {

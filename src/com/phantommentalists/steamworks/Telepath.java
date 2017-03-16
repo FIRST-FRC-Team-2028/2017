@@ -8,6 +8,7 @@ import com.phantommentalists.steamworks.command.AutonomousPlaceGear;
 import com.phantommentalists.steamworks.command.CloseGearGobblerCommand;
 import com.phantommentalists.steamworks.command.DriveCommand;
 import com.phantommentalists.steamworks.command.DriveToBoilerDistanceCommand;
+import com.phantommentalists.steamworks.command.LoadGateCommand;
 import com.phantommentalists.steamworks.command.OpenGearGobblerCommand;
 import com.phantommentalists.steamworks.command.ShootGateCommand;
 import com.phantommentalists.steamworks.command.TurnOffClimberCommand;
@@ -72,7 +73,7 @@ public class Telepath extends IterativeRobot {
     
     private TurnOnShooterCommand shooterOn;
     private ShootGateCommand setGateShoot;
-//    private SetShooterShoot setShooter;
+    private LoadGateCommand setGateLoad;
     private TurnOnLoaderCommand shooterLoad;
     private TurnOffShooterCommand shooterOff;
     
@@ -120,7 +121,7 @@ public class Telepath extends IterativeRobot {
     	setGateShoot = new ShootGateCommand(shooter);
 //    	setShooter = new SetShooterShoot(shooter);
     	shooterLoad = new TurnOnLoaderCommand(shooter);
-    	shooterOff = shooter.getDefaultShooterCommand();
+    	setGateLoad = new LoadGateCommand(shooter);
     	
     	autoChooser = new SendableChooser<CommandGroup>();
     	autoChooser.addDefault("Baseline",new AutonomousDriveAcrossBaseline(drivetrain));
@@ -145,9 +146,37 @@ public class Telepath extends IterativeRobot {
     	//TODO:Get auto mode from driver station and setup auto
     	
 //    	auto = new AutonomousDriveAcrossBaseline(drivetrain);
-    	auto = new AutonomousCenterPeg(drivetrain,gearGobbler,pixyCamera,ultrasonic,false);
+//    	auto = new AutonomousCenterPeg(drivetrain,gearGobbler,pixyCamera,ultrasonic,false);
+    	auto = null;
+    	switch(getAutoState())
+    	{
+    	case 0:
+    		auto = new AutonomousDriveAcrossBaseline(drivetrain);
+    		break;
+    	case 1:
+    		break;
+    	case 2:
+    		break;
+    	case 3:
+    		break;
+    	case 4:
+    		break;
+    	case 5:
+    		break;
+    	case 6:
+    		break;
+    	case 7:
+    		break;
+    	case 8:
+    		break;
+    	case 9:
+    		break;
+    	}
 //    	auto = autoChooser.getSelected();
-    	auto.start();
+    	if(auto != null)
+    	{
+    		auto.start();
+    	}
     }
 
     @Override
@@ -185,7 +214,7 @@ public class Telepath extends IterativeRobot {
     		drivecommand.setHighGear(true);
     	}
     	
-    	drivecommand.setDrive(-onestick.getRawAxis(0), -onestick.getRawAxis(1), onestick.getRawAxis(2));
+    	drivecommand.setDrive(-onestick.getRawAxis(0), -onestick.getRawAxis(1), buttonstick.getRawAxis(4));
     	if(onestick.getRawButton(2))
     	{
     		
@@ -233,6 +262,15 @@ public class Telepath extends IterativeRobot {
     	{
     		closeGear.start();
     	}
+    	//turns off and on the auger
+    	if(buttonstick.getRawButton(4))
+    	{
+    		shooter.turnOnAuger();
+    	}
+    	else
+    	{
+    		shooter.turnOffAuger();
+    	}
 //    	if(buttonstick.getRawButton(2))
 //    	{
 ////    		if(num ==0)
@@ -262,20 +300,21 @@ public class Telepath extends IterativeRobot {
     		break;
     	case 0:
     		shooterLoad.cancel();
-    		shooterOff.start();
+//    		shooterOff.start();
     		break;
     	case 1:
     		shooterOn.start();
     		break;
     	default:
     	}
-    	if(buttonstick.getRawButton(6))
+    	if(buttonstick.getRawButton(6) && shooter.isGateInLoadPosition())
     	{
+    		
     		setGateShoot.start();
     	}
-    	else
+    	else if(!buttonstick.getRawButton(6) && !shooter.isGateInLoadPosition())
     	{
-    		setGateShoot.cancel();
+    		setGateLoad.start();
     	}
     	
     	if (buttonstick.getRawButton(2))
@@ -319,7 +358,7 @@ public class Telepath extends IterativeRobot {
 //    		//auto Shoot Right/Blue or Red
 //    	}
 
-    	
+    	SmartDashboard.putNumber("Auto", getAutoState());
     	SmartDashboard.putBoolean("Limit Switch Left: ", climber.getLeftLimitSwitch());
     	SmartDashboard.putBoolean("Limit Switch Right: ", climber.getRightLimitSwitch());
 
@@ -375,11 +414,11 @@ public class Telepath extends IterativeRobot {
     {
     	double y = buttonstick.getRawAxis(1);
 //    	System.out.println(y);
-    	if(y <= 0.1)
+    	if(y < -0.15)
     	{
     		return -1;
     	}
-    	else if(y >= 0.5)
+    	else if(y > 0.15)
     	{
     		return 1;
     	}
@@ -387,6 +426,54 @@ public class Telepath extends IterativeRobot {
     	{
     		return 0;
     	}
+    }
+    
+    public int getAutoState()
+    {
+    	double i = buttonstick.getRawAxis(0);
+    	
+    	if(i < -0.9)
+    	{
+    		return 0;
+    	}
+    	else if(i < -0.7)
+    	{
+    		return 1;
+    	}
+        else if(i < -0.5)
+        {
+    		return 2;
+        }
+    	else if(i < -0.3)
+    	{
+    		return 3;
+    	}
+    	else if(i < -0.1)
+    	{
+    		return 4;
+    	}
+    	else if(i > 0.15 && i < 0.35)
+    	{
+    		return 5;
+    	}
+    	else if(i > 0.35 && i < 0.55)
+    	{
+    		return 6;
+    	}
+    	else if(i > 0.55 && i < 0.85)
+    	{
+    		return 7;
+    	}
+    	else if(i > 0.85)
+    	{
+    		return 8;
+    	}
+    	else
+    	{
+    		return 9;
+    	}
+
+
     }
     
     @objid ("aed20313-389b-4a3c-b333-d763e6cd1572")

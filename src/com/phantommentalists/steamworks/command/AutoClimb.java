@@ -1,5 +1,6 @@
 package com.phantommentalists.steamworks.command;
 
+import com.phantommentalists.steamworks.Parameters;
 import com.phantommentalists.steamworks.subsystem.Climber;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -14,6 +15,6 @@ public class AutoClimb extends CommandGroup {
     {
     	this.climber = climber;
     	addSequential(new ClimbTilSwitchCommand(climber));
-    	addSequential(new TimedClimbCommand(climber, 0.1));
+    	addSequential(new TimedClimbCommand(climber, Parameters.AUTONOMOUS_CLIMB_TIME));
     }
 }

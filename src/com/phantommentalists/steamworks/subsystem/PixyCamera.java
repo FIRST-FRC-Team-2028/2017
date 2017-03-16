@@ -17,7 +17,7 @@ public class PixyCamera extends Subsystem {
     private Command defaultCom;
     private VisionTarget target;
     int num = 0;
-    
+    int baudRate = 19200;
     public PixyCamera() {
     	try{
     	serialPort = new SerialPort(19200, Port.kUSB1);
@@ -121,7 +121,7 @@ public class PixyCamera extends Subsystem {
 		}
 		}catch(Exception e)
 		{
-	    	serialPort = new SerialPort(19200, Port.kUSB1);
+	    	serialPort = new SerialPort(baudRate, Port.kUSB1);
 			e.printStackTrace();
 //			System.out.println("Exception trying to get serial bytes: "+e.getMessage());
 		}

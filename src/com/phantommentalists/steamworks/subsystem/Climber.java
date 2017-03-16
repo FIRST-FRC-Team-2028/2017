@@ -24,7 +24,7 @@ public class Climber extends Subsystem
     @objid ("8e83bd89-9266-4bb6-a84f-11ea55ce94ed")
     public void turnOn() 
     {
-    	winchMotor.set(0.85);
+    	winchMotor.set(Parameters.CLIMBER_ON_CLIMB_VOLTAGE);
     }
 
     @objid ("93882f5d-5d77-43a5-81a7-07515550eaf6")
