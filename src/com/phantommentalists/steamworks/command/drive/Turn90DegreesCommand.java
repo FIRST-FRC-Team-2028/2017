@@ -1,42 +1,45 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.drive;
 
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
-import com.phantommentalists.steamworks.subsystem.Ultrasonic;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * IS NOT IMPLEMENTED
  */
-public class DriveToBoilerDistanceCommand extends Command {
-		Ultrasonic ultrasonic;
-		Drivetrain drivetrain;
-    public DriveToBoilerDistanceCommand(Drivetrain drivetrain, Ultrasonic ultrasonic) {
-    	this.ultrasonic = ultrasonic;
-    	this.drivetrain = drivetrain;
-    	requires(ultrasonic);
-    	requires(drivetrain);
+public class Turn90DegreesCommand extends Command {
+
+	Drivetrain drive;
+	boolean turnLeft = false;
+    public Turn90DegreesCommand(Drivetrain drive, boolean turnLeft) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(drive);
+    	setTimeout(0);
+    	this.drive = drive;
+    	this.turnLeft = turnLeft;
     }
-  
+
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drivetrain.crabDrive(0, 0.25);
+    	if(turnLeft)
+    		drive.spinOnAxis(0);
+    	else
+    		drive.spinOnAxis(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ultrasonic.getDistance() < 6;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	drive.crabDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same

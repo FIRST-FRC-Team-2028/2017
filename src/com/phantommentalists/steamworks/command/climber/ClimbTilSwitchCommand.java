@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.climber;
 
 import com.phantommentalists.steamworks.subsystem.Climber;
 
@@ -35,6 +35,7 @@ public class ClimbTilSwitchCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	climber.turnOff();
     }
 
     // Called when another command which requires one or more of the same

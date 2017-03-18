@@ -1,9 +1,17 @@
 package com.phantommentalists.steamworks;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 
 @objid ("147601fc-4964-44fd-9205-76f83e66cb5d")
 public class Parameters {
+	
+	public static File file;
+	
+	public static FileOutputStream outStream;
+	
 	public final static double STEERING_MOTOR_SPEED = 0.25;
 	
 	public final static double CLIMBER_ON_CLIMB_VOLTAGE = 0.85;

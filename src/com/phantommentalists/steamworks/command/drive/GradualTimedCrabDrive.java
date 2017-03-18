@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.drive;
 
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 

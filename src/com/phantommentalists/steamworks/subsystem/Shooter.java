@@ -5,7 +5,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
-import com.phantommentalists.steamworks.command.TurnOffShooterCommand;
+import com.phantommentalists.steamworks.command.shooter.TurnOffShooterCommand;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;

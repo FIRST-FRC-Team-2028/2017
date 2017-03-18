@@ -1,21 +1,27 @@
 package com.phantommentalists.steamworks;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
-import com.phantommentalists.steamworks.command.AutoClimb;
-import com.phantommentalists.steamworks.command.AutonomousCenterPeg;
-import com.phantommentalists.steamworks.command.AutonomousDriveAcrossBaseline;
-import com.phantommentalists.steamworks.command.AutonomousPlaceGear;
-import com.phantommentalists.steamworks.command.CloseGearGobblerCommand;
-import com.phantommentalists.steamworks.command.DriveCommand;
-import com.phantommentalists.steamworks.command.DriveToBoilerDistanceCommand;
-import com.phantommentalists.steamworks.command.LoadGateCommand;
-import com.phantommentalists.steamworks.command.OpenGearGobblerCommand;
-import com.phantommentalists.steamworks.command.ShootGateCommand;
-import com.phantommentalists.steamworks.command.TurnOffClimberCommand;
-import com.phantommentalists.steamworks.command.TurnOffShooterCommand;
-import com.phantommentalists.steamworks.command.TurnOnClimberCommand;
-import com.phantommentalists.steamworks.command.TurnOnLoaderCommand;
-import com.phantommentalists.steamworks.command.TurnOnShooterCommand;
+import com.phantommentalists.steamworks.command.autonomous.AutonomousCenterPeg;
+import com.phantommentalists.steamworks.command.autonomous.AutonomousDriveAcrossBaseline;
+import com.phantommentalists.steamworks.command.climber.AutoClimb;
+import com.phantommentalists.steamworks.command.climber.TurnOffClimberCommand;
+import com.phantommentalists.steamworks.command.climber.TurnOnClimberCommand;
+import com.phantommentalists.steamworks.command.drive.DriveCommand;
+import com.phantommentalists.steamworks.command.drive.DriveToBoilerDistanceCommand;
+import com.phantommentalists.steamworks.command.gearGobbler.AutonomousPlaceGear;
+import com.phantommentalists.steamworks.command.gearGobbler.CloseGearGobblerCommand;
+import com.phantommentalists.steamworks.command.gearGobbler.OpenGearGobblerCommand;
+import com.phantommentalists.steamworks.command.shooter.LoadGateCommand;
+import com.phantommentalists.steamworks.command.shooter.ShootGateCommand;
+import com.phantommentalists.steamworks.command.shooter.TurnOffShooterCommand;
+import com.phantommentalists.steamworks.command.shooter.TurnOnLoaderCommand;
+import com.phantommentalists.steamworks.command.shooter.TurnOnShooterCommand;
 import com.phantommentalists.steamworks.subsystem.Climber;
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 import com.phantommentalists.steamworks.subsystem.GearGobbler;
@@ -25,6 +31,8 @@ import com.phantommentalists.steamworks.subsystem.Ultrasonic;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.HLUsageReporting;
+import edu.wpi.first.wpilibj.HLUsageReporting.Interface;
 //github.com/FIRST-FRC-Team-2028/2017.git
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -85,13 +93,30 @@ public class Telepath extends IterativeRobot {
     @Override
     @objid ("0b53ecde-257f-466b-bcef-43fce4dbdc95")
     public void robotInit() {
+    	//TODO:COMMENT IF NOT WORKING!
+    	Parameters.file = new File("/home/lvuser/logFile.txt");
+    	try {
+    		Parameters.file.createNewFile();
+			Parameters.outStream = new FileOutputStream(Parameters.file,false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //    	server = CameraServer.getInstance();
 //    	UsbCamera cam = new UsbCamera("cam0", 0);
 //    	cam.setFPS(30);
 //    	server.addCamera(cam);
 //    	server.startAutomaticCapture(cam);
 //    	cam.setVideoMode(VideoMode.PixelFormat.)
+//    	HLUsageReporting a = new HLUsageReporting();
     	System.out.println("here robot init");
+    	//TODO:COMMENT IF NOT WORKING!
+    	try {
+			Parameters.outStream.write("Initializing robot\n".getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	drivetrain = new Drivetrain();
     	shooter = new Shooter();
     	gearGobbler = new GearGobbler();
@@ -138,16 +163,31 @@ public class Telepath extends IterativeRobot {
 //    	placeGear = new PlaceGearButton();
     	
 //    	placeGear.whenPressed(autoPlaceGear);
+    	//TODO:COMMENT IF NOT WORKING!
+    	try {
+			Parameters.outStream.write("Finished initialization of robot\n".getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @Override
     @objid ("dab887d4-4871-4722-aa13-e9fed526eebe")
     public void autonomousInit() { 
+    	//TODO:COMMENT IF NOT WORKING!
+    	try {
+			Parameters.outStream.write("Initializing Autonomous\n".getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	//TODO:Get auto mode from driver station and setup auto
     	
 //    	auto = new AutonomousDriveAcrossBaseline(drivetrain);
 //    	auto = new AutonomousCenterPeg(drivetrain,gearGobbler,pixyCamera,ultrasonic,false);
     	auto = null;
+    	
     	switch(getAutoState())
     	{
     	case 0:
@@ -173,6 +213,12 @@ public class Telepath extends IterativeRobot {
     		break;
     	}
 //    	auto = autoChooser.getSelected();
+    	//TODO:COMMENT IF NOT WORKING!
+    	try {
+			Parameters.outStream.write(("Mode "+auto.getName() + " selected\n").getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     	if(auto != null)
     	{
     		auto.start();
@@ -182,6 +228,12 @@ public class Telepath extends IterativeRobot {
     @Override
     @objid ("198d6d2d-b717-47a0-9406-b8edadcc5497")
     public void teleopInit() {
+    	//TODO:COMMENT IF NOT WORKING!
+    	try {
+			Parameters.outStream.write("Teleop Initializing\n".getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     	System.out.println("Tele init");
     	drivetrain.enableTurning(true);
     	double p=0,i=0,d=0;
@@ -190,6 +242,12 @@ public class Telepath extends IterativeRobot {
     	d = SmartDashboard.getNumber("D", shooter.getD());
     	shooter.setPID(p, i, d);
     	comp.start();
+    	//TODO:COMMENT IF NOT WORKING!
+    	try {
+			Parameters.outStream.write("Teleop Initializing Finished\n".getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @Override

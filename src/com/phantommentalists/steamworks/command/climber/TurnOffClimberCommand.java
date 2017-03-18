@@ -1,22 +1,18 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.climber;
 
-import com.phantommentalists.steamworks.subsystem.Shooter;
+import com.phantommentalists.steamworks.subsystem.Climber;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ShootGateCommand extends Command {
+public class TurnOffClimberCommand extends Command {
 
-	Shooter shooter;
-	
-    public ShootGateCommand(Shooter shooter) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis)
-    	this.shooter = shooter;
-    	requires(shooter);
-    	setTimeout(2);
+	Climber climber;
+    public TurnOffClimberCommand(Climber climber) {
+    	this.climber = climber;
+    	requires(climber);
     }
 
     // Called just before this Command runs the first time
@@ -25,13 +21,12 @@ public class ShootGateCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	shooter.setShooterGatePosition();
-//    	shooter.turnOnConveyorReverse();
+    	climber.turnOff();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -4,7 +4,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.Parameters;
-import com.phantommentalists.steamworks.command.DriveCommand;
+import com.phantommentalists.steamworks.command.drive.DriveCommand;
 import com.phantommentalists.steamworks.component.DriveSide;
 
 import edu.wpi.first.wpilibj.Solenoid;

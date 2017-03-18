@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.gearGobbler;
 
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 import com.phantommentalists.steamworks.subsystem.PixyCamera;

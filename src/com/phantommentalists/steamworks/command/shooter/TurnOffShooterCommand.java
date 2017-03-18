@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.shooter;
 
 import com.modeliosoft.modelio.javadesigner.annotations.objid;
 import com.phantommentalists.steamworks.subsystem.Shooter;

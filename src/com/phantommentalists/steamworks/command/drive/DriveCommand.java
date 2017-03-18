@@ -1,6 +1,9 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.drive;
+
+import java.io.IOException;
 
 import com.phantommentalists.steamworks.DriveType;
+import com.phantommentalists.steamworks.Parameters;
 import com.phantommentalists.steamworks.Parameters.Buttons;
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 
@@ -56,10 +59,22 @@ public class DriveCommand extends Command {
     	if(highGear)
     	{
     		drive.setHighGear();
+//    		try {
+//    			Parameters.outStream.write("Drive gear set high\n".getBytes());
+//    		} catch (IOException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
     	}
     	else
     	{
     		drive.setLowGear();
+//    		try {
+//    			Parameters.outStream.write("Drive gear set low\n".getBytes());
+//    		} catch (IOException e) {
+//    			// TODO Auto-generated catch block
+//    			e.printStackTrace();
+//    		}
     	}
     }
     

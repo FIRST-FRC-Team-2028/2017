@@ -1,4 +1,4 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.climber;
 
 import com.phantommentalists.steamworks.subsystem.Climber;
 

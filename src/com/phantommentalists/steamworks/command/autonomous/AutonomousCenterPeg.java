@@ -1,6 +1,9 @@
-package com.phantommentalists.steamworks.command;
+package com.phantommentalists.steamworks.command.autonomous;
 
 import com.phantommentalists.steamworks.Parameters;
+import com.phantommentalists.steamworks.command.drive.TimedCrabDrive;
+import com.phantommentalists.steamworks.command.gearGobbler.AutonomousPlaceGear;
+import com.phantommentalists.steamworks.command.gearGobbler.OpenGearGobblerCommand;
 import com.phantommentalists.steamworks.subsystem.Drivetrain;
 import com.phantommentalists.steamworks.subsystem.GearGobbler;
 import com.phantommentalists.steamworks.subsystem.PixyCamera;
